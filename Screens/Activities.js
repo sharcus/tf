@@ -1,9 +1,9 @@
 import React, {useLayoutEffect } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Switch } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 
 import IconButton from '../Components/IconButton'
-import { removeActivity } from '../Store/actions/items';
+import { removeActivity, toggleActivityState } from '../Store/actions/items';
 
  const Activities = (props) => {  
     const { navigation } = props;
@@ -28,7 +28,7 @@ import { removeActivity } from '../Store/actions/items';
 
     const removeActivityItem = (id) => {
         
-        console.log(`Removing ${id}`);
+        //(`Removing ${id}`);
         dispatch(removeActivity(id)); 
     }
 
@@ -48,10 +48,21 @@ import { removeActivity } from '../Store/actions/items';
       ]
     );
 
+    const onToggleState = (id) => {
+      dispatch(toggleActivityState(id));
+    }
+
     const items = (activityItems.map(x => (
         <View key={x.id} style={styles.activityRow}>
             <Text style={styles.rowText}>{x.name}</Text>            
             <IconButton style={styles.smallButton} onPress={() => {props.navigation.navigate("EditActivity", { id: x.id, name: x.name})}} icon="ios-brush"  />
+            <Switch style={styles.smallButton}
+              trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={x.enabled ? "dodgerblue" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={() => {onToggleState(x.id)}}
+              value={x.enabled}
+            />
             <IconButton style={styles.smallButton} onPress={() => {onRemoveItem(x.id, x.name) }} icon="ios-close-circle"  />
         </View>
         )));
@@ -77,7 +88,7 @@ const styles = StyleSheet.create({
     rowText: {
         fontSize: 18,
         fontWeight: "bold",
-        width: "70%",
+        width: "62.5%",
         padding: 10
     }
 })

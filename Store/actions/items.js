@@ -4,6 +4,8 @@ export const SAVE_ACTIVITY = 'SAVE_ACTIVITY';
 export const TOGGLE_DAY = 'TOGGLE_DAY';
 export const SET_HOURS_PER_DAY = 'SET_HOURS_PER_DAY';
 export const ADD_NEW_PERIOD_CONFIG = 'ADD_NEW_PERIOD_CONFIG';
+export const TOGGLE_ACTIVITY_STATE = 'TOGGLE_ACTIVITY_STATE';
+export const SET_PLANNED_ACTIVITY = 'SET_PLANNED_ACTIVITY';
 
 export const changeItem = (text) => {
     return { type: CHANGE_ITEM, newText: text};
@@ -27,4 +29,12 @@ export const setHoursPerDay = (hoursPerDay) => {
 
 export const addNewPeriodConfig = (config) => {
     return {type: ADD_NEW_PERIOD_CONFIG, config: config};
+}
+
+export const toggleActivityState = (id) => {
+    return {type: TOGGLE_ACTIVITY_STATE, id: id}
+}
+
+export const setConfigPlannedActivity = (activity, year, month) => {
+    return {type: SET_PLANNED_ACTIVITY, activity: activity, year: year, month: month}
 }

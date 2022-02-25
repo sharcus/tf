@@ -6,19 +6,19 @@ import FeederButton from '../Components/Button'
 
 const TodayPanel = () => (
     <View>
-        <Text>This is today</Text>
+        <Text>Activity for Today</Text>
     </View>
 );
 
 const WeekPanel = () => (
     <View>
-        <Text>Week</Text>
+        <Text>Activity for a Week</Text>
     </View>
 );
 
 const MonthPanel = () => (
     <View>
-        <Text>Month</Text>
+        <Text>Activity for a Month</Text>
     </View>
 );
 
