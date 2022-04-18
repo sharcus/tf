@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -10,12 +10,19 @@ import { TextInput } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
 import { getUpdatedArray } from "../BusinessLogic/CommonHelpers";
 import { getPlanedActivity } from "../BusinessLogic/PlanConfigBuilder";
-import { setConfigPlannedActivity } from "../Store/actions/items"
+import { setConfigPlannedActivity } from "../Store/actions/items";
 
 import FeederButton from "../Components/Button";
 
 const Workload = (props) => {
+  const { navigation } = props;
   const { currentMonth, currentYear } = props.route.params;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Monthly Workload",
+    });
+  });
 
   const dispatch = useDispatch();
 
@@ -38,7 +45,9 @@ const Workload = (props) => {
 
   const [initialHours, setInitialHours] = useState(config.totalHours);
   const [totalHours, setTotalHours] = useState(Math.round(th * 10) / 10);
-  const [totalPercentage, setTotalPercentage] = useState(Math.round(tp * 10) / 10);
+  const [totalPercentage, setTotalPercentage] = useState(
+    Math.round(tp * 10) / 10
+  );
   const [plannedActivity, setPlannedActivity] = useState(pa);
 
   const getActivityName = (id) => {
@@ -47,7 +56,9 @@ const Workload = (props) => {
   };
 
   const onApplyWorkload = () => {
-    dispatch(setConfigPlannedActivity(plannedActivity, currentYear, currentMonth));
+    dispatch(
+      setConfigPlannedActivity(plannedActivity, currentYear, currentMonth)
+    );
   };
 
   const updatePercentage = (index, text) => {
@@ -59,7 +70,7 @@ const Workload = (props) => {
     const percent = text.length > 0 ? parseFloat(text) : 0;
 
     const newWorkload = (initialHours * percent) / 100;
-    udpatedItem.workload = (Math.round(newWorkload * 10) / 10).toString();
+    udpatedItem.workload = Math.round(newWorkload).toString();
 
     const newUpdatedArray = getUpdatedArray(updatedArray, udpatedItem);
 
@@ -70,9 +81,11 @@ const Workload = (props) => {
       tp -= activity.percent.length > 0 ? parseFloat(activity.percent) : 0;
     });
 
+    if (tp < 0) tp = 0;
+
     setPlannedActivity(newUpdatedArray);
-    setTotalHours(Math.round(th * 10) / 10);
-    setTotalPercentage(Math.round(tp * 10) / 10);
+    setTotalHours(Math.round(th));
+    setTotalPercentage(Math.round(tp));
   };
 
   const updateHours = (index, text) => {
@@ -83,20 +96,23 @@ const Workload = (props) => {
 
     const workload = text.length > 0 ? parseFloat(text) : 0;
     const newPercent = (workload * 100) / initialHours;
-    udpatedItem.percent = (Math.round(newPercent * 10) / 10).toString();
+    udpatedItem.percent = Math.round(newPercent).toString();
 
     const newUpdatedArray = getUpdatedArray(updatedArray, udpatedItem);
 
     let th = initialHours;
     let tp = 100;
+
     newUpdatedArray.forEach((activity) => {
       th -= activity.workload.length > 0 ? parseFloat(activity.workload) : 0;
       tp -= activity.percent.length > 0 ? parseFloat(activity.percent) : 0;
     });
 
+    if (tp < 0) tp = 0;
+
     setPlannedActivity(newUpdatedArray);
-    setTotalHours(Math.round(th * 10) / 10);
-    setTotalPercentage(Math.round(tp * 10) / 10);
+    setTotalHours(th);
+    setTotalPercentage(tp);
   };
 
   const items = plannedActivity.map((x, i) => (
@@ -123,11 +139,18 @@ const Workload = (props) => {
 
   return (
     <KeyboardAvoidingView>
-      <ScrollView>
-        <View style={styles.activitiesPanel}>{items}</View>
-        <View>
+      <View>
+        <View style={styles.headerPanel}>
+          <Text style={styles.boldText}>Activity</Text>
+          <Text style={styles.smallText}>Hours</Text>
+          <Text style={styles.smallText}>%</Text>
+        </View>
+        <ScrollView style={styles.itemsPanel}>
+          <View style={styles.activitiesPanel}>{items}</View>
+        </ScrollView>
+        <View style={styles.bottomPanel}>
           <View style={styles.totalRow}>
-            <Text style={styles.rowText}>Remain:</Text>
+            <Text style={styles.boldText}>Remain:</Text>
             <TextInput
               editable={false}
               value={totalHours.toString()}
@@ -141,20 +164,35 @@ const Workload = (props) => {
               onChangeText={updateHours}
             ></TextInput>
           </View>
+          <View>
+            <FeederButton
+              style={styles.button}
+              onPress={onApplyWorkload}
+              Text="Apply Workload"
+            />
+          </View>
         </View>
-        <View>
-          <FeederButton
-            style={styles.button}
-            onPress={onApplyWorkload}
-            Text="Apply Workload"
-          />
-        </View>
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  headerPanel: {
+    height: "10%",
+    flexDirection: "row",
+    backgroundColor: "white",
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    minHeight: 56,
+  },
+  itemsPanel: {
+    height: "70%",
+  },
+  bottomPanel: {
+    height: "20%",
+    backgroundColor: "white",
+  },
   activitiesPanel: {
     paddingTop: 20,
   },
@@ -181,9 +219,22 @@ const styles = StyleSheet.create({
   },
   rowText: {
     fontSize: 18,
+    fontWeight: "normal",
+    width: "65%",
+    padding: 10,
+  },
+  boldText: {
+    fontSize: 18,
     fontWeight: "bold",
     width: "65%",
     padding: 10,
+  },
+  smallText: {
+    width: "15%",
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingTop: 10,
+    textAlign: "center",
   },
 });
 

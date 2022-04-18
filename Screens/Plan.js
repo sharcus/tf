@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -20,7 +20,14 @@ import {
 import { buildPlanConfig } from "../BusinessLogic/PlanConfigBuilder";
 
 const Plan = (props) => {
+  const { navigation } = props;
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Monthly Plan"
+    })
+  });
 
   const hoursPerDay = useSelector((state) => state.items.hoursPerDayDefault);
   const planConfig = useSelector((state) => state.items.planConfig);
@@ -37,8 +44,6 @@ const Plan = (props) => {
   );
 
   const toggleDate = (x) => {
-    //console.log(`on toggle ${x} for year ${currentYear} and month ${currentMonth}`);
-
     dispatch(toggleDay(x, currentYear, currentMonth));
   };
 
