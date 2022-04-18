@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -15,7 +15,14 @@ import { setConfigPlannedActivity } from "../Store/actions/items"
 import FeederButton from "../Components/Button";
 
 const Workload = (props) => {
+  const { navigation } = props;
   const { currentMonth, currentYear } = props.route.params;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Monthly Workload"
+    })
+  });
 
   const dispatch = useDispatch();
 

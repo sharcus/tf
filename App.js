@@ -5,10 +5,12 @@ import 'react-native-gesture-handler';
 
 import { createStore, combineReducers } from 'redux'
 import itemsReducer from './Store/reducers/items'
+import logsReducer from './Store/reducers/logs' 
 import { Provider } from 'react-redux'
 
 const rootReducer = combineReducers({
-  items: itemsReducer
+  items: itemsReducer,
+  logs: logsReducer
 });
 
 const store = createStore(rootReducer);

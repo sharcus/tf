@@ -1,103 +1,97 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, useWindowDimensions } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import React, { useState } from "react";
+import { Text, View, StyleSheet, useWindowDimensions } from "react-native";
+import { TabView, SceneMap } from "react-native-tab-view";
 
-import FeederButton from '../Components/Button'
+import { TodayPanel } from "../Components/Summary/TodayView";
+import { WeekPanel } from "../Components/Summary/WeekPanel";
+import { MonthPanel } from "../Components/Summary/MonthView";
 
-const TodayPanel = () => (
-    <View>
-        <Text>Activity for Today</Text>
-    </View>
-);
-
-const WeekPanel = () => (
-    <View>
-        <Text>Activity for a Week</Text>
-    </View>
-);
-
-const MonthPanel = () => (
-    <View>
-        <Text>Activity for a Month</Text>
-    </View>
-);
+import FeederButton from "../Components/Button";
 
 
 const renderScene = SceneMap({
-    today: TodayPanel,
-    week: WeekPanel,
-    month: MonthPanel
+  today: TodayPanel,
+  week: WeekPanel,
+  month: MonthPanel,
 });
 
-const Summary = props => {
-    const layout = useWindowDimensions();
+const Summary = (props) => {
+  const layout = useWindowDimensions();
 
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: 'today', title: 'Today' },
-        { key: 'week', title: 'Week' },
-        { key: 'month', title: 'Month' },
-    ]);
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "today", title: "Today" },
+    { key: "week", title: "Week" },
+    { key: "month", title: "Month" },
+  ]);
 
-    //const dateLabel = moment().format("Do MMM YYYY");
-    const dateStr = new Date().toLocaleDateString(); 
+  const dateStr = new Date().toLocaleDateString();
 
-
-    return <View style={styles.screen}>
-        <View style={styles.mainContent}> 
+  return (
+    <View style={styles.screen}>
+      <View style={styles.mainContent}>
         <Text style={styles.dateLabel}>{dateStr}</Text>
-            <TabView
-                navigationState={{ index, routes }}
-                renderScene={renderScene}
-                onIndexChange={setIndex}
-                initialLayout={{ width: layout.width }}
-            />
-
-        </View>
-        <View style={styles.buttonPanel}>
-            <FeederButton style={styles.button} onPress={() => { props.navigation.navigate("NewLog")}} Text='Add New Log' />
-            <FeederButton style={styles.button} onPress={() => { props.navigation.navigate("MoreView")}} Text='Show More' />
-        </View>
-
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+        />
+      </View>
+      <View style={styles.buttonPanel}>
+        <FeederButton
+          style={styles.button}
+          onPress={() => {
+            props.navigation.navigate("NewLog");
+          }}
+          Text="Add New Log"
+        />
+        <FeederButton
+          style={styles.button}
+          onPress={() => {
+            props.navigation.navigate("MoreView");
+          }}
+          Text="Show More"
+        />
+      </View>
     </View>
-}
+  );
+};
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: "column"
-    },
-    mainContent: {
-        flex: 9,
-        width: "100%",
-    },
-    buttonPanel: {
-        width: "100%",
-        height:60,
-        flexDirection: "row",        
-        paddingBottom: 26
-    },
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  mainContent: {
+    flex: 9,
+    width: "100%",
+  },
+  buttonPanel: {
+    width: "100%",
+    height: 60,
+    flexDirection: "row",
+    paddingBottom: 26,
+  },
 
-    button: {
-        width: "48%"
-    },
+  button: {
+    width: "48%",
+  },
 
-    dateLabel: {
-        fontSize: 26,
-        fontWeight: "bold",
-        color: "#000000",
-        textAlign: "center"
-
-    }
+  dateLabel: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#000000",
+    textAlign: "center",
+  },
 });
 
-Summary.navigationOptions = navData => {
-    return {
-        headerTitle: 'Summary',
-    }
-}
+Summary.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Summary",
+  };
+};
 
 export default Summary;
-

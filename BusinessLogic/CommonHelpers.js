@@ -11,8 +11,22 @@ export const getUpdatedArray = (array, updatedItem) => {
     }
     else {
         const newItems = array.filter(x => x.id != updatedItem.id);
-        resultArray = [...newItems, activity]
+        resultArray = [...newItems, updatedItem]
     }
 
     return resultArray;
+}
+
+export const getNextId = (array) => {
+    if(array.length == 0)
+       return 1;         
+
+    const max = Math.max.apply(
+      Math,
+      array.map(function (o) {
+        return o.id;
+      })
+    );
+
+    return max;
 }
