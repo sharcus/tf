@@ -8,7 +8,6 @@ import { MonthPanel } from "../Components/Summary/MonthView";
 
 import FeederButton from "../Components/Button";
 
-
 const renderScene = SceneMap({
   today: TodayPanel,
   week: WeekPanel,
@@ -49,7 +48,9 @@ const Summary = (props) => {
         <FeederButton
           style={styles.button}
           onPress={() => {
-            props.navigation.navigate("MoreView", {period: routes[index].key});
+            props.navigation.navigate("MoreView", {
+              period: routes[index].key,
+            });
           }}
           Text="Show More"
         />
