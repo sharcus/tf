@@ -20,7 +20,7 @@ const Activities = (props) => {
     navigation.setOptions({
       headerRight: () => (
         <IconButton
-          style={styles.smallButton}
+          style={styles.headerButton}
           onPress={onNewItem}
           icon="ios-add-circle-outline"
         />
@@ -99,6 +99,9 @@ const styles = StyleSheet.create({
   },
   smallButton: {
     width: "12.5%",
+  },
+  headerButton: {
+    width: "20%",
   },
   activityRow: {
     flexDirection: "row",

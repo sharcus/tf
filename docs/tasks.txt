@@ -1,0 +1,12 @@
+ - added possibility to edit existent item in More view
+ - allow navigate to any date in home (remove hardcoded today)
+ - fix issue that item for first day of month is not visible in month view
+ - Date Picker is not working on IOS
+ - Activity picker is not workin on IOS
+
+----------------------
+09/09/2022
++ Migrate From Expo 42 to Expo 46
++ Fix Add Activity button on IOS
++ Fix Title for New Log & Edit Activity
++ when go to home open initial screen always

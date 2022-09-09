@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -6,7 +6,14 @@ import FeederButton from "../Components/Button";
 import { saveActivity } from "../Store/actions/items";
 
 const EditActivity = (props) => {
+  const { navigation } = props;
   const { id, name } = props.route.params;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Activity Details",
+    });
+  });
 
   const [nameValue, setNameValue] = useState(name);
   const dispatch = useDispatch();

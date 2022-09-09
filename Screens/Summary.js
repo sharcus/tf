@@ -19,7 +19,7 @@ const Summary = (props) => {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "today", title: "Today" },
+    { key: "today", title: "Day" },
     { key: "week", title: "Week" },
     { key: "month", title: "Month" },
   ]);

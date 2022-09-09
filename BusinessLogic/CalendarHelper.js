@@ -55,9 +55,38 @@ export const getMonthName = (monthNumber) => {
   return monthNumber >= monthNames.length ? "" : monthNames[monthNumber];
 };
 
+export const getFullMonthName = (monthNumber) => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  return monthNumber >= monthNames.length ? "" : monthNames[monthNumber];
+};
+
 export const getDateString = (date) => {
   const result = date
     ? `${String(date.getDate()).padStart(2, "0")} ${getMonthName(
+        date.getMonth()
+      )} ${date.getFullYear()}`
+    : "";
+
+  return result;
+};
+
+export const getLongDateString = (date) => {
+  const result = date
+    ? `${String(date.getDate()).padStart(2, "0")} ${getFullMonthName(
         date.getMonth()
       )} ${date.getFullYear()}`
     : "";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import FeederButton from "./Button";
-import { getMonthName } from "../BusinessLogic/CalendarHelper";
+import { getFullMonthName } from "../BusinessLogic/CalendarHelper";
 
 export const PeriodSelector = (props) => {
   const handleBackClicked = () => {
@@ -18,7 +18,7 @@ export const PeriodSelector = (props) => {
     props.onPeriodChanged(newYear, newMonth);
   };
 
-  const periodLabel = `${props.year} ${getMonthName(props.month)}`;
+  const periodLabel = `${props.year} ${getFullMonthName(props.month)}`;
   //console.log(periodLabel);
 
   return (
