@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import ModalSelector from "react-native-modal-selector";
 
 import { useSelector, useDispatch } from "react-redux";
 import FeederButton from "../Components/Button";
@@ -41,10 +41,26 @@ const NewLog = (props) => {
   const [from, setFrom] = useState(new Date());
   const [to, setTo] = useState(new Date());
   const [activity, setActivity] = useState("");
+  const [activityLabel, setActivityLabel] = useState("");
   const [description, setDescription] = useState("");
 
   const onAccept = () => {
-    dispatch(setLogItem(activity, from, to, description));
+    const fromDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      from.getHours(),
+      from.getMinutes()
+    );
+    const toDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      to.getHours(),
+      to.getMinutes()
+    );
+
+    dispatch(setLogItem(activity, fromDate, toDate, description));
     props.navigation.navigate("Summary");
   };
 
@@ -63,6 +79,8 @@ const NewLog = (props) => {
   const setDateField = (event, date) => {
     hideDatePicker();
     setDate(date);
+
+    console.log(`Date changed to ${date}`);
   };
 
   const showFromPicker = () => {
@@ -95,9 +113,9 @@ const NewLog = (props) => {
     }
   };
 
-  const items = activityItems.map((x, i) => (
-    <Picker.Item key={x.id} label={x.name} value={x.id} />
-  ));
+  const data = activityItems.map((x, i) => {
+    return { key: x.id, label: x.name };
+  });
 
   return (
     <KeyboardAvoidingView>
@@ -109,33 +127,37 @@ const NewLog = (props) => {
                 value={date}
                 mode={"date"}
                 display="default"
+                style={{ width: "100%" }}
                 onChange={setDateField}
               />
             )}
-            <Text style={styles.dateLabel} onPress={showDatePicker}>
-              {getLongDateString(date)}
-            </Text>
+            {!isDatePickerVisible && (
+              <Text style={styles.dateLabel} onPress={showDatePicker}>
+                {getLongDateString(date)}
+              </Text>
+            )}
           </View>
           <View style={styles.row}>
             <Text>Activity</Text>
           </View>
           <View style={styles.rowBordered}>
-            <Picker
-              selectedValue={activity}
-              style={styles.dropDown}
-              onValueChange={(itemValue, itemIndex) => setActivity(itemValue)}
-            >
-              <Picker.Item key={0} label="" value="" />
-              {items}
-            </Picker>
+            <ModalSelector
+              data={data}
+              initValue={activityLabel}
+              style={{ width: "100%" }}
+              onChange={(option) => {
+                setActivity(option.key);
+                setActivityLabel(option.label);
+              }}
+            />
           </View>
           <View style={styles.row}>
-            <Text style={styles.twinLabel}>From</Text>
-            <Text style={styles.twinLabel}>To</Text>
+            <Text>From</Text>
           </View>
           <View style={styles.row}>
             {isFromPickerVisible && (
               <DateTimePicker
+                style={styles.fullLineControl}
                 value={from}
                 mode={"time"}
                 is24Hour={true}
@@ -143,22 +165,31 @@ const NewLog = (props) => {
                 onChange={setFromField}
               />
             )}
-            <Text style={styles.twinControl} onPress={showFromPicker}>
-              {getTimeString(from)}
-            </Text>
-
+            {!isFromPickerVisible && (
+              <Text style={styles.fullLineControl} onPress={showFromPicker}>
+                {getTimeString(from)}
+              </Text>
+            )}
+          </View>
+          <View style={styles.row}>
+            <Text>To</Text>
+          </View>
+          <View style={styles.row}>
             {isToPickerVisible && (
               <DateTimePicker
                 value={to}
+                style={styles.fullLineControl}
                 mode={"time"}
                 is24Hour={true}
                 display="default"
                 onChange={setToField}
               />
             )}
-            <Text style={styles.twinControl} onPress={showToPicker}>
-              {getTimeString(to)}
-            </Text>
+            {!isToPickerVisible && (
+              <Text style={styles.fullLineControl} onPress={showToPicker}>
+                {getTimeString(to)}
+              </Text>
+            )}
           </View>
           <View style={styles.row}>
             <Text>Description</Text>
@@ -227,11 +258,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: "yellow",
   },
-  twinLabel: {
-    width: "50%",
-  },
-  twinControl: {
-    width: "46%",
+  fullLineControl: {
+    width: "94%",
     height: 50,
     marginRight: 10,
     borderColor: "grey",

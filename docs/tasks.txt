@@ -1,8 +1,13 @@
  - added possibility to edit existent item in More view
  - allow navigate to any date in home (remove hardcoded today)
- - fix issue that item for first day of month is not visible in month view
- - Date Picker is not working on IOS
- - Activity picker is not workin on IOS
+
+
+----------------------
+29/09/2022
++ fix issue that new item was added only for current date
++ add scroll for Show More View to make possible review all items
++ Date Picker is not working on IOS
++ Activity picker is not workin on IOS
 
 ----------------------
 09/09/2022

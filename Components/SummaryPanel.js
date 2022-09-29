@@ -19,7 +19,9 @@ export const SummaryPanel = (props) => {
   const [from, to] = getDatesForPeriod(date, type);
 
   const logItems = useSelector((state) => state.logs.logItems);
-  const filteredLogItems = logItems.filter((x) => x.from > from && to > x.from);
+  const filteredLogItems = logItems.filter(
+    (x) => x.from >= from && to >= x.from
+  );
 
   const activityItems = useSelector((state) => state.items.activityItems);
 

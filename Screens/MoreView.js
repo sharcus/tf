@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 import {
   getDatesForPeriod,
   getDateString,
@@ -27,8 +27,12 @@ const MoreView = (props) => {
   };
 
   const logItems = useSelector((state) => state.logs.logItems);
+
+  for (const log of logItems)
+    console.log(`${log.from} - ${log.to} : ${log.description}`);
+
   const filteredLogItems = logItems
-    .filter((x) => x.from > from && to > x.from)
+    .filter((x) => x.from >= from && to >= x.from)
     .sort((a, b) => a.from > b.from);
 
   const headerText =
@@ -51,14 +55,14 @@ const MoreView = (props) => {
           <Text style={styles.cellText}>{getTypeDescription(log.type)}</Text>
         </View>
       </View>
-      <View style={styles.desriptionCell}>
+      <View style={styles.descriptionCell}>
         <Text style={styles.descriptionText}>{log.description}</Text>
       </View>
     </View>
   ));
 
   return (
-    <View style={styles.mainPanel}>
+    <ScrollView style={styles.mainPanel}>
       <View style={styles.header}>
         <View>
           <Text style={styles.headerLabel}>Period: </Text>
@@ -79,7 +83,7 @@ const MoreView = (props) => {
         </View>
       </View>
       {items}
-    </View>
+    </ScrollView>
   );
 };
 
