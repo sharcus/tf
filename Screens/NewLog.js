@@ -20,6 +20,12 @@ import { setLogItem } from "../Store/actions/logs";
 
 const NewLog = (props) => {
   const { navigation } = props;
+  const paramId = props.route.params.id;
+  const paramFrom = props.route.params.from;
+  const paramTo = props.route.params.to;
+  const paramType = props.route.params.type;
+  const paramTypeString = props.route.params.typeString;
+  const paramDescription = props.route.params.description;
 
   const itemText = useSelector((state) => state.items.text);
   const dispatch = useDispatch();
@@ -37,12 +43,13 @@ const NewLog = (props) => {
   const [isToPickerVisible, setToPickerVisibility] = useState(false);
   const [isFromPickerVisible, setFromPickerVisibility] = useState(false);
 
-  const [date, setDate] = useState(new Date());
-  const [from, setFrom] = useState(new Date());
-  const [to, setTo] = useState(new Date());
-  const [activity, setActivity] = useState("");
-  const [activityLabel, setActivityLabel] = useState("");
-  const [description, setDescription] = useState("");
+  const [id, setId] = useState(paramId);
+  const [date, setDate] = useState(paramFrom);
+  const [from, setFrom] = useState(paramFrom);
+  const [to, setTo] = useState(paramTo);
+  const [activity, setActivity] = useState(paramType);
+  const [activityLabel, setActivityLabel] = useState(paramTypeString);
+  const [description, setDescription] = useState(paramDescription);
 
   const onAccept = () => {
     const fromDate = new Date(
@@ -60,12 +67,14 @@ const NewLog = (props) => {
       to.getMinutes()
     );
 
-    dispatch(setLogItem(activity, fromDate, toDate, description));
-    props.navigation.navigate("Summary");
+    dispatch(setLogItem(activity, fromDate, toDate, description, id));
+    //props.navigation.navigate("Summary");
+    props.navigation.goBack();
   };
 
   const onCancel = () => {
-    props.navigation.navigate("Summary");
+    //props.navigation.navigate("Summary");
+    props.navigation.goBack();
   };
 
   const showDatePicker = () => {
@@ -144,7 +153,10 @@ const NewLog = (props) => {
             <ModalSelector
               data={data}
               initValue={activityLabel}
-              style={{ width: "100%" }}
+              style={{
+                width: "100%",
+                backgroundColor: "white",
+              }}
               onChange={(option) => {
                 setActivity(option.key);
                 setActivityLabel(option.label);
@@ -239,9 +251,6 @@ const styles = StyleSheet.create({
   rowBordered: {
     display: "flex",
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "grey",
-    borderRadius: 3,
     width: "95%",
     margin: 10,
   },
@@ -259,24 +268,26 @@ const styles = StyleSheet.create({
     backgroundColor: "yellow",
   },
   fullLineControl: {
-    width: "94%",
-    height: 50,
+    width: "95%",
+    height: 40,
     marginRight: 10,
-    borderColor: "grey",
+    borderColor: "#cccccc",
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 6,
     textAlignVertical: "center",
     paddingLeft: 5,
     marginBottom: 20,
+    backgroundColor: "white",
   },
   descriptionControl: {
-    height: 100,
+    height: 120,
     borderWidth: 1,
-    borderColor: "grey",
-    borderRadius: 3,
+    borderColor: "#cccccc",
+    borderRadius: 6,
     width: "95%",
     padding: 10,
     textAlignVertical: "top",
+    backgroundColor: "white",
   },
   buttomButton: {
     marginTop: 20,

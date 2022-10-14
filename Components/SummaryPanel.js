@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
   },
   activityTable: {
     margin: 10,
-    borderColor: "grey",
+    borderColor: "#eeeeff",
     borderWidth: 1,
+    borderRadius: 10,
     backgroundColor: "white",
     padding: 5,
     height: "63%",

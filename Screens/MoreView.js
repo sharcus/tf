@@ -5,6 +5,7 @@ import {
   getDateString,
   getTimeString,
 } from "../BusinessLogic/CalendarHelper";
+import IconButton from "../Components/IconButton";
 import { useSelector } from "react-redux";
 
 const MoreView = (props) => {
@@ -40,6 +41,18 @@ const MoreView = (props) => {
       ? "Today"
       : `${getDateString(from)} - ${getDateString(to)}`;
 
+  const onEditLog = (log) => {
+    props.navigation.navigate("NewLog", {
+      id: log.id,
+      from: log.from,
+      to: log.to,
+      type: log.type,
+      typeString: getTypeDescription(log.type),
+      description: log.description,
+    });
+    //console.log(log);
+  };
+
   const items = filteredLogItems.map((log) => (
     <View key={log.id} style={styles.compositeRow}>
       <View style={styles.borderlesRow}>
@@ -53,6 +66,14 @@ const MoreView = (props) => {
         </View>
         <View style={styles.typeCell}>
           <Text style={styles.cellText}>{getTypeDescription(log.type)}</Text>
+        </View>
+        <View style={styles.buttonCell}>
+          <IconButton
+            onPress={() => {
+              onEditLog(log);
+            }}
+            icon="ios-brush"
+          />
         </View>
       </View>
       <View style={styles.descriptionCell}>
@@ -81,6 +102,9 @@ const MoreView = (props) => {
         <View style={styles.typeCell}>
           <Text style={styles.headerTableText}>Activity</Text>
         </View>
+        <View style={styles.buttonCell}>
+          <Text style={styles.headerTableText}></Text>
+        </View>
       </View>
       {items}
     </ScrollView>
@@ -95,20 +119,23 @@ const styles = StyleSheet.create({
   compositeRow: {
     display: "flex",
     flexDirection: "column",
-    borderColor: "lightgrey",
+    borderColor: "#cccccc",
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 6,
     height: 60,
+    marginHorizontal: 5,
+    marginVertical: 5,
+    backgroundColor: "white",
   },
   borderlesRow: {
     display: "flex",
     flexDirection: "row",
-    height: 30,
+    height: 40,
   },
   row: {
     display: "flex",
     flexDirection: "row",
-    borderColor: "lightgrey",
+    borderColor: "#cccccc",
     borderWidth: 1,
     borderRadius: 3,
     height: 30,
@@ -123,16 +150,19 @@ const styles = StyleSheet.create({
     backgroundColor: "dodgerblue",
   },
   dateCell: {
-    width: "32%",
+    width: "29%",
     padding: 5,
   },
   typeCell: {
-    width: "36%",
+    width: "32%",
     padding: 5,
   },
   durationCell: {
-    width: "32%",
+    width: "29%",
     padding: 5,
+  },
+  buttonCell: {
+    width: "10%",
   },
   descriptionCell: {
     marginRight: 20,
@@ -159,6 +189,7 @@ const styles = StyleSheet.create({
   headerLabel: {
     fontSize: 22,
     color: "dodgerblue",
+    marginLeft: 10,
   },
   headerText: {
     fontSize: 22,

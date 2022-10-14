@@ -25,8 +25,8 @@ const Plan = (props) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "Monthly Plan"
-    })
+      headerTitle: "Monthly Plan",
+    });
   });
 
   const hoursPerDay = useSelector((state) => state.items.hoursPerDayDefault);
@@ -129,7 +129,9 @@ const styles = StyleSheet.create({
     width: 200,
     height: 32,
     backgroundColor: "white",
-    borderColor: "grey",
+    borderColor: "#cccccc",
+    borderWidth: 1,
+    borderRadius: 6,
     fontWeight: "bold",
     paddingStart: 5,
   },

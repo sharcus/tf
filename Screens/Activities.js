@@ -67,7 +67,7 @@ const Activities = (props) => {
         icon="ios-brush"
       />
       <Switch
-        style={styles.smallButton}
+        style={styles.toggleButton}
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={x.enabled ? "dodgerblue" : "#f4f3f4"}
         ios_backgroundColor="#3e3e3e"
@@ -98,6 +98,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   smallButton: {
+    width: "12.5%",
+  },
+  toggleButton: {
     width: "12.5%",
   },
   headerButton: {

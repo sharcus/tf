@@ -198,9 +198,9 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "15%",
-    borderColor: "lightgrey",
+    borderColor: "#cccccc",
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 6,
     marginRight: 10,
     backgroundColor: "white",
     padding: 5,

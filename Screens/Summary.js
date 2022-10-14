@@ -41,7 +41,14 @@ const Summary = (props) => {
         <FeederButton
           style={styles.button}
           onPress={() => {
-            props.navigation.navigate("NewLog");
+            props.navigation.navigate("NewLog", {
+              id: 0,
+              from: new Date(),
+              to: new Date(),
+              type: "",
+              typeString: "",
+              description: "",
+            });
           }}
           Text="Add New Log"
         />
