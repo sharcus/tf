@@ -21,8 +21,8 @@ import { setLogItem } from "../Store/actions/logs";
 const NewLog = (props) => {
   const { navigation } = props;
   const paramId = props.route.params.id;
-  const paramFrom = props.route.params.from;
-  const paramTo = props.route.params.to;
+  const paramFrom = new Date(props.route.params.from);
+  const paramTo = new Date(props.route.params.to);
   const paramType = props.route.params.type;
   const paramTypeString = props.route.params.typeString;
   const paramDescription = props.route.params.description;

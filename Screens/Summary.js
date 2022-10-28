@@ -6,6 +6,11 @@ import { TodayPanel } from "../Components/Summary/TodayView";
 import { WeekPanel } from "../Components/Summary/WeekPanel";
 import { MonthPanel } from "../Components/Summary/MonthView";
 
+import {
+  getDatesForPeriod,
+  getDateString,
+} from "../BusinessLogic/CalendarHelper";
+
 import FeederButton from "../Components/Button";
 
 const renderScene = SceneMap({
@@ -24,16 +29,30 @@ const Summary = (props) => {
     { key: "month", title: "Month" },
   ]);
 
-  const dateStr = new Date().toLocaleDateString();
+  const [titleLabel, setTitleLabel] = useState(getDateString(new Date()));
+
+  const onIndexChanged = (number) => {
+    setIndex(number);
+    const date = new Date();
+
+    let labelTitle;
+    if (number === 0) labelTitle = getDateString(date);
+    else {
+      const [from, to] = getDatesForPeriod(date, routes[number].key);
+      labelTitle = `${getDateString(from)} - ${getDateString(to)}`;
+    }
+
+    setTitleLabel(labelTitle);
+  };
 
   return (
     <View style={styles.screen}>
       <View style={styles.mainContent}>
-        <Text style={styles.dateLabel}>{dateStr}</Text>
+        <Text style={styles.dateLabel}>{titleLabel}</Text>
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
-          onIndexChange={setIndex}
+          onIndexChange={onIndexChanged}
           initialLayout={{ width: layout.width }}
         />
       </View>
@@ -43,8 +62,8 @@ const Summary = (props) => {
           onPress={() => {
             props.navigation.navigate("NewLog", {
               id: 0,
-              from: new Date(),
-              to: new Date(),
+              from: new Date().toJSON(),
+              to: new Date().toJSON(),
               type: "",
               typeString: "",
               description: "",

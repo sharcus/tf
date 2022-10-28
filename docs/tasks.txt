@@ -1,6 +1,16 @@
- - added possibility to edit existent item in More view
  - allow navigate to any date in home (remove hardcoded today)
+ - prevend adding/saving log without specified log type 
 
+28/10/2022
++ Fix warning 'Non-serializable values were found in the navigation state' on open NewLog
++ Update date title on switch between period types (day/week/month)
++ show Date instead of 'Today' label in More View for Day - as it subject to be different
++ use same date format on Summary and in More view
+
+14/10/2022
+----------------------
++ added possibility to edit existent item in More view 
++ update UI for all inputs - make it the same
 
 ----------------------
 29/09/2022

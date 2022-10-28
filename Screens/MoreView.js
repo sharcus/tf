@@ -12,13 +12,15 @@ const MoreView = (props) => {
   const { navigation } = props;
   const { period } = props.route.params;
 
+  const date = new Date();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "Detailed Worklog",
     });
   });
 
-  const [from, to] = getDatesForPeriod(new Date(), period);
+  const [from, to] = getDatesForPeriod(date, period);
 
   const activityItems = useSelector((state) => state.items.activityItems);
   const getTypeDescription = (activityId) => {
@@ -38,14 +40,14 @@ const MoreView = (props) => {
 
   const headerText =
     period == "today"
-      ? "Today"
+      ? getDateString(date)
       : `${getDateString(from)} - ${getDateString(to)}`;
 
   const onEditLog = (log) => {
     props.navigation.navigate("NewLog", {
       id: log.id,
-      from: log.from,
-      to: log.to,
+      from: log.from.toJSON(),
+      to: log.to.toJSON(),
       type: log.type,
       typeString: getTypeDescription(log.type),
       description: log.description,
