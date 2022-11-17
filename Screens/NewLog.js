@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import {
+  Alert,
   Text,
   View,
   StyleSheet,
@@ -52,6 +53,18 @@ const NewLog = (props) => {
   const [description, setDescription] = useState(paramDescription);
 
   const onAccept = () => {
+    if (!activity) {
+      Alert.alert("Save changes", "Please, specify activity type to continue", [
+        {
+          text: "OK",
+          onPress: () => {},
+          style: "cancel",
+        },
+      ]);
+
+      return;
+    }
+
     const fromDate = new Date(
       date.getFullYear(),
       date.getMonth(),

@@ -13,15 +13,16 @@ import {
 
 import FeederButton from "../Components/Button";
 
-const renderScene = SceneMap({
-  today: TodayPanel,
-  week: WeekPanel,
-  month: MonthPanel,
-});
-
 const Summary = (props) => {
+  const renderScene = SceneMap({
+    today: TodayPanel,
+    week: WeekPanel,
+    month: MonthPanel,
+  });
+
   const layout = useWindowDimensions();
 
+  const [date, setDate] = useState(new Date());
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "today", title: "Day" },
@@ -33,22 +34,67 @@ const Summary = (props) => {
 
   const onIndexChanged = (number) => {
     setIndex(number);
-    const date = new Date();
+    updateTitleLabel();
+  };
 
+  const updateTitleLabel = () => {
     let labelTitle;
-    if (number === 0) labelTitle = getDateString(date);
+    if (index === 0) labelTitle = getDateString(date);
     else {
-      const [from, to] = getDatesForPeriod(date, routes[number].key);
+      const [from, to] = getDatesForPeriod(date, routes[index].key);
       labelTitle = `${getDateString(from)} - ${getDateString(to)}`;
     }
 
     setTitleLabel(labelTitle);
   };
 
+  const onChangeDate = (add) => {
+    const periodType = routes[index].key;
+    var newDate = new Date(date);
+    var delta = 0;
+
+    switch (periodType) {
+      case "today":
+        delta = add ? 1 : -1;
+        break;
+      case "week":
+        delta = add ? 7 : -7;
+        break;
+      case "month":
+        delta = add ? 30 : -30;
+        break;
+    }
+
+    newDate.setDate(newDate.getDate() + delta);
+
+    console.log(
+      `New Date is ${newDate}, period: ${periodType}, delta: ${delta}`
+    );
+
+    updateTitleLabel();
+    setDate(newDate);
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.mainContent}>
-        <Text style={styles.dateLabel}>{titleLabel}</Text>
+        <View style={styles.headerPanel}>
+          <FeederButton
+            style={styles.dateButton}
+            Text="<"
+            onPress={() => {
+              onChangeDate(false);
+            }}
+          />
+          <Text style={styles.dateLabel}>{titleLabel}</Text>
+          <FeederButton
+            style={styles.dateButton}
+            Text=">"
+            onPress={() => {
+              onChangeDate(true);
+            }}
+          />
+        </View>
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
@@ -96,6 +142,11 @@ const styles = StyleSheet.create({
     flex: 9,
     width: "100%",
   },
+
+  headerPanel: {
+    width: "100%",
+    flexDirection: "row",
+  },
   buttonPanel: {
     width: "100%",
     height: 60,
@@ -112,6 +163,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000000",
     textAlign: "center",
+    width: "87%",
+  },
+  dateButton: {
+    width: "5%",
   },
 });
 
