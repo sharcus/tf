@@ -14,12 +14,6 @@ import {
 import FeederButton from "../Components/Button";
 
 const Summary = (props) => {
-  const renderScene = SceneMap({
-    today: TodayPanel,
-    week: WeekPanel,
-    month: MonthPanel,
-  });
-
   const layout = useWindowDimensions();
 
   const [date, setDate] = useState(new Date());
@@ -30,21 +24,42 @@ const Summary = (props) => {
     { key: "month", title: "Month" },
   ]);
 
+  // const renderScene = SceneMap({
+  //   today: TodayPanel,
+  //   week: WeekPanel,
+  //   month: MonthPanel,
+  // });
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "today":
+        return <TodayPanel date={date} />;
+      case "week":
+        return <WeekPanel date={date} />;
+      case "month":
+        return <MonthPanel date={date} />;
+      default:
+        return null;
+    }
+  };
+
   const [titleLabel, setTitleLabel] = useState(getDateString(new Date()));
 
   const onIndexChanged = (number) => {
+    //console.log(`On change index, now index is ${number}`);
+    updateTitleLabel(date, number);
     setIndex(number);
-    updateTitleLabel();
   };
 
-  const updateTitleLabel = () => {
+  const updateTitleLabel = (d, n) => {
     let labelTitle;
-    if (index === 0) labelTitle = getDateString(date);
+    if (n === 0) labelTitle = getDateString(d);
     else {
-      const [from, to] = getDatesForPeriod(date, routes[index].key);
+      const [from, to] = getDatesForPeriod(d, routes[n].key);
       labelTitle = `${getDateString(from)} - ${getDateString(to)}`;
     }
 
+    //console.log(`Now label is changed to '${labelTitle}'`);
     setTitleLabel(labelTitle);
   };
 
@@ -67,11 +82,9 @@ const Summary = (props) => {
 
     newDate.setDate(newDate.getDate() + delta);
 
-    console.log(
-      `New Date is ${newDate}, period: ${periodType}, delta: ${delta}`
-    );
+    //console.log(`New Date is '${newDate}', period: '${periodType}', delta: '${delta}'`);
 
-    updateTitleLabel();
+    updateTitleLabel(newDate, index);
     setDate(newDate);
   };
 
@@ -122,6 +135,7 @@ const Summary = (props) => {
           onPress={() => {
             props.navigation.navigate("MoreView", {
               period: routes[index].key,
+              date: date.getTime(),
             });
           }}
           Text="Show More"
@@ -159,7 +173,7 @@ const styles = StyleSheet.create({
   },
 
   dateLabel: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#000000",
     textAlign: "center",

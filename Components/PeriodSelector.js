@@ -24,13 +24,13 @@ export const PeriodSelector = (props) => {
   return (
     <View style={styles.navigationPanel}>
       <FeederButton
-        style={styles.naviagationButton}
+        style={styles.navigationButton}
         Text="<"
         onPress={handleBackClicked}
       />
       <Text style={styles.navigationLabel}>{periodLabel}</Text>
       <FeederButton
-        style={styles.naviagationButton}
+        style={styles.navigationButton}
         Text=">"
         onPress={handleForwardClicked}
       />
@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
-  naviagationButton: {
-    width: 50,
-    flex: 1,
+  navigationButton: {
+    width: "5%",
   },
   navigationLabel: {
     flex: 5,

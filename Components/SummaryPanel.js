@@ -16,6 +16,8 @@ import {
 export const SummaryPanel = (props) => {
   const { date, type } = props;
 
+  console.log(`Refreshing ${type} for ${date}`);
+
   const [from, to] = getDatesForPeriod(date, type);
 
   const logItems = useSelector((state) => state.logs.logItems);

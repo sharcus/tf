@@ -10,17 +10,16 @@ import { useSelector } from "react-redux";
 
 const MoreView = (props) => {
   const { navigation } = props;
-  const { period } = props.route.params;
+  const { period, date } = props.route.params;
 
-  const date = new Date();
-
+  const d = new Date(date);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "Detailed Worklog",
     });
   });
 
-  const [from, to] = getDatesForPeriod(date, period);
+  const [from, to] = getDatesForPeriod(d, period);
 
   const activityItems = useSelector((state) => state.items.activityItems);
   const getTypeDescription = (activityId) => {
@@ -40,7 +39,7 @@ const MoreView = (props) => {
 
   const headerText =
     period == "today"
-      ? getDateString(date)
+      ? getDateString(d)
       : `${getDateString(from)} - ${getDateString(to)}`;
 
   const onEditLog = (log) => {
