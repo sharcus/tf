@@ -24,12 +24,6 @@ const Summary = (props) => {
     { key: "month", title: "Month" },
   ]);
 
-  // const renderScene = SceneMap({
-  //   today: TodayPanel,
-  //   week: WeekPanel,
-  //   month: MonthPanel,
-  // });
-
   const renderScene = ({ route }) => {
     switch (route.key) {
       case "today":
@@ -46,7 +40,6 @@ const Summary = (props) => {
   const [titleLabel, setTitleLabel] = useState(getDateString(new Date()));
 
   const onIndexChanged = (number) => {
-    //console.log(`On change index, now index is ${number}`);
     updateTitleLabel(date, number);
     setIndex(number);
   };
@@ -59,7 +52,6 @@ const Summary = (props) => {
       labelTitle = `${getDateString(from)} - ${getDateString(to)}`;
     }
 
-    //console.log(`Now label is changed to '${labelTitle}'`);
     setTitleLabel(labelTitle);
   };
 
@@ -81,8 +73,6 @@ const Summary = (props) => {
     }
 
     newDate.setDate(newDate.getDate() + delta);
-
-    //console.log(`New Date is '${newDate}', period: '${periodType}', delta: '${delta}'`);
 
     updateTitleLabel(newDate, index);
     setDate(newDate);

@@ -1,3 +1,7 @@
+19/12/2022
+----------------------
++ Add Line chart to Statistics with Sample data
+
 25/11/2022
 ----------------------
  + Fix Date change
