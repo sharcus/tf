@@ -1,3 +1,12 @@
+24/01/2023
+----------------------
++ Allow show hide different statistics category
+
+12/01/2023
+----------------------
++ Update appearance of staticstics chart
++ Show real data on statistics chart
+
 19/12/2022
 ----------------------
 + Add Line chart to Statistics with Sample data

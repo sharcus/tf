@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-community/checkbox": "^0.5.14",
     "@react-native-community/datetimepicker": "6.2.0",
     "@react-native-picker/picker": "2.4.2",
     "@react-navigation/bottom-tabs": "^6.3.3",
@@ -33,7 +34,8 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "~0.18.7",
     "react-redux": "^7.2.8",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "expo-checkbox": "~2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6"

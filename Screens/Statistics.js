@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
+import Checkbox from "expo-checkbox";
 import { useSelector } from "react-redux";
+import { getColors } from "../BusinessLogic/ColorsHelper";
+import { getUpdatedArray } from "../BusinessLogic/CommonHelpers";
 
 import {
   LineChart,
@@ -15,72 +18,96 @@ import { getDatesForPeriod } from "../BusinessLogic/CalendarHelper";
 
 const Statistics = (props) => {
   const [date, setDate] = useState(new Date());
+
   const [from, to] = getDatesForPeriod(date, "month");
 
   const activityItems = useSelector((state) => state.items.activityItems);
+
+  const [activities, setActivities] = useState(activityItems);
+
   const logItems = useSelector((state) => state.logs.logItems);
+
+  // console.log(`All log items count: ${logItems.length}`);
+  // console.log(logItems);
+
   const filteredLogItems = logItems.filter(
     (x) => x.from >= from && to >= x.from
   );
 
-  const data = buildChartData(activityItems, filteredLogItems, from, to);
+  // TODO: add support for more than 15 colors
+  const colors = getColors();
+
+  const data = buildChartData(activities, colors, filteredLogItems, from, to);
   //console.log(data);
+
+  console.log("Parse data");
+  console.log(data);
 
   const segmentCount = 3;
 
   const width = Dimensions.get("window").width;
 
+  const updateCheckedStatus = (id, isChecked) => {
+    const activityItems = [...activities];
+
+    let activity = activityItems.find((x) => x.id == id);
+    if (activity) {
+      activity.enabled = isChecked;
+    }
+
+    const resultArray = getUpdatedArray(activityItems, activity);
+    setActivities(resultArray);
+  };
+
+  const checkboxes = [];
+  for (let i = 0; i < activities.length; i++) {
+    const chk = (
+      <View style={styles.checkboxContainer} key={activities[i].id}>
+        <Checkbox
+          value={activities[i].enabled}
+          onValueChange={(checked) => {
+            updateCheckedStatus(activities[i].id, checked);
+          }}
+        />
+        <Text style={{ backgroundColor: colors[i], width: 80, marginLeft: 5 }}>
+          {activities[i].name}
+        </Text>
+      </View>
+    );
+    checkboxes.push(chk);
+  }
+
   return (
     <View style={styles.screen}>
-      <LineChart
-        data={data}
-        width={width}
-        height={320}
-        withDots={false}
-        formatYLabel={(x) => {
-          return getTimeFormatFromMinutes(x);
-        }}
-        segments={segmentCount}
-        yAxisInterval={4}
-        chartConfig={{
-          backgroundGradientFrom: "whitesmoke",
-          backgroundGradientTo: "whitesmoke",
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: { borderRadius: 2 },
-        }}
-        style={{
-          marginVertical: 0,
-          borderRadius: 0,
-        }}
-      />
+      <View style={styles.checkboxParent}>{checkboxes}</View>
+      {data.datasets.length > 0 && (
+        <LineChart
+          data={data}
+          width={width}
+          height={320}
+          withDots={false}
+          formatYLabel={(x) => {
+            return getTimeFormatFromMinutes(x);
+          }}
+          segments={segmentCount}
+          yAxisInterval={4}
+          chartConfig={{
+            backgroundGradientFrom: "whitesmoke",
+            backgroundGradientTo: "whitesmoke",
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: { borderRadius: 2 },
+          }}
+          style={{
+            marginVertical: 0,
+            borderRadius: 0,
+          }}
+        />
+      )}
     </View>
   );
 };
 
-const buildChartData = (activities, items, from, to) => {
-  // TODO: add support for more than 15 colors
-  const colors = [
-    "red",
-    "green",
-    "blue",
-    "yellow",
-    "pink",
-    "darkgreen",
-    "deepskyblue",
-    "violet",
-    "orange",
-    "grey",
-    "brown",
-    "cyan",
-    "magenta",
-    "darkblue",
-    "black",
-  ];
-
-  //    labels: [1, '', 3, '' .at.apply.],
-  //    datasets: [ { data: [0, 0, 0], strokeWidth: 1, color: () => `blue`}, { data: [0, 0, 0], strokeWidth: 1, color: () => `blue`}, ...],
-  //    legend: ["Biznet", "Education", ...],
-
+const buildChartData = (activities, colors, items, from, to) => {
   const activitiesIndicies = {};
   const data = { labels: [], datasets: [], legend: [] };
 
@@ -88,7 +115,8 @@ const buildChartData = (activities, items, from, to) => {
 
   for (let i = 0; i < activities.length; i++) {
     const activity = activities[i];
-    data.legend.push(activity.name);
+    //if (!activity.enabled) continue;
+    //data.legend.push(activity.name);
     activitiesIndicies[activity.id] = i;
 
     const dataSetItem = { data: [], strokeWidth: 1, color: () => colors[i] };
@@ -113,6 +141,11 @@ const buildChartData = (activities, items, from, to) => {
   // fill items
   for (const item of items) {
     var activityIndex = activitiesIndicies[item.type];
+    //if (!activityIndex) continue;
+
+    const cur = activities.find((x) => x.id == item.type);
+    if (!cur.enabled) continue;
+
     var duration = getDuration(item);
     var dateIndex = Math.floor(
       (item.from.getTime() - from.getTime()) / (1000 * 3600 * 24)
@@ -122,8 +155,11 @@ const buildChartData = (activities, items, from, to) => {
       `activity=${activityIndex}, duration=${duration}, dateIndex=${dateIndex}`
     );
 
-    data.datasets[activityIndex].data[dateIndex] += duration;
+    if (data.datasets.length > activityIndex)
+      data.datasets[activityIndex].data[dateIndex] += duration;
   }
+
+  console.log(`Counts of datasets: ${data.datasets.length}`);
 
   return data;
 };
@@ -137,7 +173,7 @@ const getDuration = (log) => {
 
 const getTimeFormatFromMinutes = (x) => {
   const hours = Math.floor(x / 60);
-  const minutes = x % 60;
+  const minutes = Math.round(x % 60);
 
   return `${zeroPad(hours, 2)}:${zeroPad(minutes, 2)}`;
   //return x;
@@ -150,6 +186,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    margin: 10,
+  },
+  checkboxParent: {
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });
 
