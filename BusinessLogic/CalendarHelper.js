@@ -239,3 +239,40 @@ export const getPlannedHours = (planConfig, hourPerDay, from, to) => {
 
   return total;
 };
+
+export const isLeapYear = (year) => {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+};
+
+export const getDaysInMonth = (year, month) => {
+  return [
+    31,
+    isLeapYear(year) ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ][month];
+};
+
+export const isLeapYearForDate = (date) => {
+  return isLeapYear(date.getFullYear());
+};
+
+export const getDaysInMonthForDate = (date) => {
+  return getDaysInMonth(date.getFullYear(), date.getMonth());
+};
+
+export const addMonthsForDate = (date, monthCount) => {
+  var n = date.getDate();
+  date.setDate(1);
+  date.setMonth(date.getMonth() + monthCount);
+  date.setDate(Math.min(n, getDaysInMonthForDate(date)));
+  return date;
+};

@@ -9,6 +9,7 @@ import { MonthPanel } from "../Components/Summary/MonthView";
 import {
   getDatesForPeriod,
   getDateString,
+  addMonthsForDate,
 } from "../BusinessLogic/CalendarHelper";
 
 import FeederButton from "../Components/Button";
@@ -58,21 +59,23 @@ const Summary = (props) => {
   const onChangeDate = (add) => {
     const periodType = routes[index].key;
     var newDate = new Date(date);
-    var delta = 0;
 
-    switch (periodType) {
-      case "today":
-        delta = add ? 1 : -1;
-        break;
-      case "week":
-        delta = add ? 7 : -7;
-        break;
-      case "month":
-        delta = add ? 30 : -30;
-        break;
+    if (periodType === "month") {
+      newDate = addMonthsForDate(newDate, add ? 1 : -1);
+    } else {
+      var delta = 0;
+
+      switch (periodType) {
+        case "today":
+          delta = add ? 1 : -1;
+          break;
+        case "week":
+          delta = add ? 7 : -7;
+          break;
+      }
+
+      newDate.setDate(newDate.getDate() + delta);
     }
-
-    newDate.setDate(newDate.getDate() + delta);
 
     updateTitleLabel(newDate, index);
     setDate(newDate);

@@ -54,6 +54,14 @@ const MoreView = (props) => {
     //console.log(log);
   };
 
+  const normalizeText = (text, count) => {
+    var res = text.replace(/[\r\n]/gm, "");
+
+    if (res.length > count) res = res.substring(0, count - 3) + "...";
+
+    return res;
+  };
+
   const items = filteredLogItems.map((log) => (
     <View key={log.id} style={styles.compositeRow}>
       <View style={styles.borderlesRow}>
@@ -78,7 +86,9 @@ const MoreView = (props) => {
         </View>
       </View>
       <View style={styles.descriptionCell}>
-        <Text style={styles.descriptionText}>{log.description}</Text>
+        <Text style={styles.descriptionText}>
+          {normalizeText(log.description, 45)}
+        </Text>
       </View>
     </View>
   ));

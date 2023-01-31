@@ -1,3 +1,8 @@
+31/01/2023
++ add support for multiline text for log description textbox
++ fix appearance of more view grid for items with long description
++ fix that on 31/01 when click next month - nothing happend
+
 24/01/2023
 ----------------------
 + Allow show hide different statistics category

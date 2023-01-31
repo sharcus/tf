@@ -224,6 +224,8 @@ const NewLog = (props) => {
               style={styles.descriptionControl}
               value={description}
               onChangeText={setDescription}
+              textAlignVertical={"top"}
+              multiline={true}
             ></TextInput>
           </View>
           <View style={styles.row}>
