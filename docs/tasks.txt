@@ -1,4 +1,11 @@
+30/03/2023
+----------------------
++ Extend test log set - include item for next week and next month
++ Add Navigation to Statistics screen
++ Clear-up code
+
 31/01/2023
+----------------------
 + add support for multiline text for log description textbox
 + fix appearance of more view grid for items with long description
 + fix that on 31/01 when click next month - nothing happend

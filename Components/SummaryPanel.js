@@ -37,8 +37,6 @@ export const SummaryPanel = (props) => {
   const planConfig = useSelector((state) => state.items.planConfig);
   const plannedHours = getPlannedHours(planConfig, hourPerDay, from, to);
 
-  //console.log(`Planned hours: ${plannedHours}`);
-
   const loggedHours = calculateLoggedDuration(filteredLogItems);
 
   const totalLabel = `Logged hours: ${loggedHours[0]}:${loggedHours[1]}`;
@@ -57,8 +55,6 @@ export const SummaryPanel = (props) => {
   const grouped = groupLoggedItems(filteredLogItems);
 
   const groupedItems = [];
-
-  //console.log(grouped);
 
   for (const prop in grouped) {
     const activity = getTypeDescription(prop);

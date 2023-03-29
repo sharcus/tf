@@ -74,9 +74,15 @@ export const getFullMonthName = (monthNumber) => {
   return monthNumber >= monthNames.length ? "" : monthNames[monthNumber];
 };
 
-export const getDateString = (date) => {
-  //console.log(`getDateString for ${date}`);
+export const getMonthYearString = (date) => {
+  const result = date
+    ? `${getFullMonthName(date.getMonth())} ${date.getFullYear()}`
+    : "";
 
+  return result;
+};
+
+export const getDateString = (date) => {
   const result = date
     ? `${String(date.getDate()).padStart(2, "0")} ${getMonthName(
         date.getMonth()

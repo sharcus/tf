@@ -14,6 +14,12 @@ const getTestLogItems = () => {
   let lastMonth = new Date();
   lastMonth = addMonths(lastMonth, -1);
 
+  let nextMonth = new Date();
+  nextMonth = addMonths(nextMonth, 1);
+
+  const nextWeek = new Date();
+  nextWeek.setDate(today.getDate() + 7);
+
   const items = [
     {
       id: 1,
@@ -128,6 +134,44 @@ const getTestLogItems = () => {
         30
       ),
       description: "Play Football",
+    },
+    {
+      id: 7,
+      type: 5,
+      from: new Date(
+        nextMonth.getFullYear(),
+        nextMonth.getMonth(),
+        nextMonth.getDate(),
+        14,
+        0
+      ),
+      to: new Date(
+        nextMonth.getFullYear(),
+        nextMonth.getMonth(),
+        nextMonth.getDate(),
+        15,
+        30
+      ),
+      description: "Play Hockey",
+    },
+    {
+      id: 8,
+      type: 5,
+      from: new Date(
+        nextWeek.getFullYear(),
+        nextWeek.getMonth(),
+        nextWeek.getDate(),
+        14,
+        0
+      ),
+      to: new Date(
+        nextWeek.getFullYear(),
+        nextWeek.getMonth(),
+        nextWeek.getDate(),
+        16,
+        30
+      ),
+      description: "Play Ping-Pong",
     },
   ];
 

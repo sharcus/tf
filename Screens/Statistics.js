@@ -5,19 +5,19 @@ import { useSelector } from "react-redux";
 import { getColors } from "../BusinessLogic/ColorsHelper";
 import { getUpdatedArray } from "../BusinessLogic/CommonHelpers";
 
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import { LineChart } from "react-native-chart-kit";
 
-import { getDatesForPeriod } from "../BusinessLogic/CalendarHelper";
+import {
+  getDatesForPeriod,
+  getMonthYearString,
+  addMonthsForDate,
+} from "../BusinessLogic/CalendarHelper";
+
+import FeederButton from "../Components/Button";
 
 const Statistics = (props) => {
   const [date, setDate] = useState(new Date());
+  const [titleLabel, setTitleLabel] = useState(getMonthYearString(new Date()));
 
   const [from, to] = getDatesForPeriod(date, "month");
 
@@ -27,9 +27,6 @@ const Statistics = (props) => {
 
   const logItems = useSelector((state) => state.logs.logItems);
 
-  // console.log(`All log items count: ${logItems.length}`);
-  // console.log(logItems);
-
   const filteredLogItems = logItems.filter(
     (x) => x.from >= from && to >= x.from
   );
@@ -38,14 +35,22 @@ const Statistics = (props) => {
   const colors = getColors();
 
   const data = buildChartData(activities, colors, filteredLogItems, from, to);
-  //console.log(data);
 
-  console.log("Parse data");
-  console.log(data);
+  // console.log("Parse data");
+  // console.log(data);
 
   const segmentCount = 3;
 
   const width = Dimensions.get("window").width;
+
+  const onChangeDate = (add) => {
+    var newDate = new Date(date);
+    newDate = addMonthsForDate(newDate, add ? 1 : -1);
+    setDate(newDate);
+
+    const labelTitle = getMonthYearString(newDate);
+    setTitleLabel(labelTitle);
+  };
 
   const updateCheckedStatus = (id, isChecked) => {
     const activityItems = [...activities];
@@ -79,6 +84,23 @@ const Statistics = (props) => {
 
   return (
     <View style={styles.screen}>
+      <View style={styles.headerPanel}>
+        <FeederButton
+          style={styles.dateButton}
+          Text="<"
+          onPress={() => {
+            onChangeDate(false);
+          }}
+        />
+        <Text style={styles.dateLabel}>{titleLabel}</Text>
+        <FeederButton
+          style={styles.dateButton}
+          Text=">"
+          onPress={() => {
+            onChangeDate(true);
+          }}
+        />
+      </View>
       <View style={styles.checkboxParent}>{checkboxes}</View>
       {data.datasets.length > 0 && (
         <LineChart
@@ -194,6 +216,31 @@ const styles = StyleSheet.create({
   checkboxParent: {
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  headerPanel: {
+    width: "100%",
+    flexDirection: "row",
+  },
+  buttonPanel: {
+    width: "100%",
+    height: 60,
+    flexDirection: "row",
+    paddingBottom: 26,
+  },
+
+  button: {
+    width: "48%",
+  },
+
+  dateLabel: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000000",
+    textAlign: "center",
+    width: "87%",
+  },
+  dateButton: {
+    width: "5%",
   },
 });
 
