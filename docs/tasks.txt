@@ -1,3 +1,8 @@
+18/07/2023
+----------------------
++ Remove test data
++ Fix issue with adding new activity when activity list is empty
+
 30/03/2023
 ----------------------
 + Extend test log set - include item for next week and next month

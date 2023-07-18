@@ -1,5 +1,4 @@
 import {
-  CHANGE_ITEM,
   REMOVE_ACTIVITY,
   SAVE_ACTIVITY,
   TOGGLE_DAY,
@@ -11,16 +10,8 @@ import {
 import { getUpdatedArray } from "../../BusinessLogic/CommonHelpers";
 
 const initialState = {
-  text: "flip",
   hoursPerDayDefault: 6,
-  activityItems: [
-    { id: 1, enabled: true, name: "Primary" },
-    { id: 2, enabled: true, name: "Education" },
-    { id: 3, enabled: true, name: "Writing" },
-    { id: 4, enabled: true, name: "Biznet" },
-    { id: 5, enabled: true, name: "Secondary" },
-    { id: 6, enabled: true, name: "Belarussian" },
-  ],
+  activityItems: [],
   planConfig: [],
 };
 
@@ -49,32 +40,31 @@ const itemsReducer = (state = initialState, action) => {
         hoursPerDayDefault: action.hoursPerDay,
       };
     }
-case SET_PLANNED_ACTIVITY:
-    {
-        const planConfigList = [...state.planConfig];
+    case SET_PLANNED_ACTIVITY: {
+      const planConfigList = [...state.planConfig];
 
-        console.log(`Befor: ${planConfigList}`);
+      console.log(`Befor: ${planConfigList}`);
 
-        const planConfig = planConfigList.find(
-          (x) => x.year == action.year && x.month == action.month
-        );
+      const planConfig = planConfigList.find(
+        (x) => x.year == action.year && x.month == action.month
+      );
 
-        console.log(`planConfig: ${planConfig}`);
+      //console.log(`planConfig: ${planConfig}`);
 
-        const newPlanConfig = {
-            year: planConfig.year,
-            month: planConfig.month,
-            chosenDays: planConfig.chosenDays,
-            totalHours: planConfig.totalHours,
-            plannedActivity: [...action.activity]
-          };
+      const newPlanConfig = {
+        year: planConfig.year,
+        month: planConfig.month,
+        chosenDays: planConfig.chosenDays,
+        totalHours: planConfig.totalHours,
+        plannedActivity: [...action.activity],
+      };
 
-          const newList = planConfigList.filter((x) => x != planConfig);
-          newList.push(newPlanConfig);
-    
-          console.log(`after: ${newList}`);
+      const newList = planConfigList.filter((x) => x != planConfig);
+      newList.push(newPlanConfig);
 
-          return { ...state, planConfig: newList };
+      //console.log(`after: ${newList}`);
+
+      return { ...state, planConfig: newList };
     }
 
     case TOGGLE_DAY: {
@@ -96,16 +86,13 @@ case SET_PLANNED_ACTIVITY:
         month: planConfig.month,
         chosenDays: newChosenDay,
         totalHours: newChosenDay.length * hoursPerDay,
-        plannedActivity: [...planConfig.plannedActivity]
+        plannedActivity: [...planConfig.plannedActivity],
       };
 
       const newList = planConfigList.filter((x) => x != planConfig);
       newList.push(newPlanConfig);
 
       return { ...state, planConfig: newList };
-    }
-    case CHANGE_ITEM: {
-      return { ...state, text: action.newText };
     }
     case REMOVE_ACTIVITY: {
       const activityItems = [...state.activityItems];
@@ -118,17 +105,24 @@ case SET_PLANNED_ACTIVITY:
 
       let activity = activityItems.find((x) => x.id == action.id);
       if (!activity) {
-        const max = Math.max.apply(
-          Math,
-          activityItems.map(function (o) {
-            return o.id;
-          })
-        );
+        let max = 0;
+
+        if (activityItems.length != 0) {
+          max = Math.max.apply(
+            Math,
+            activityItems.map(function (o) {
+              return o.id;
+            })
+          );
+        }
+
         activity = { id: max + 1, enabled: true, name: action.name };
       } else {
         activity.name = action.name;
       }
       const resultArray = getUpdatedArray(activityItems, activity);
+
+      //console.log(resultArray);
 
       return { ...state, activityItems: resultArray };
     }

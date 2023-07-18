@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     textAlign: "center",
     width: "87%",
+    marginTop: 5,
   },
   dateButton: {
     width: "5%",
