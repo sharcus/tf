@@ -1,3 +1,10 @@
+30/08/2023
+----------------------
++ update expo and general dependencies
++ fix crash on empty plan config
++ add logic for removing log item
++ align buttons for activity item
+
 18/07/2023
 ----------------------
 + Remove test data

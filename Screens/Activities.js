@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   },
   smallButton: {
     width: "12.5%",
+    marginTop: 5,
   },
   toggleButton: {
     width: "12.5%",

@@ -1,20 +1,18 @@
-import { SET_LOG_ITEM } from "../actions/logs";
+import { SET_LOG_ITEM, REMOVE_LOG } from "../actions/logs";
 import { getUpdatedArray, getNextId } from "../../BusinessLogic/CommonHelpers";
-import { addMonths } from "../../BusinessLogic/CalendarHelper";
-//import { getTestLogItems } from "./testData";
-
-//log item: {id: number, activity: number, from: date, to: date, description: string}
 const initialState = {
   logItems: [],
 };
 
 const logsReducer = (state = initialState, action) => {
-  // console.log(
-  //   `On LOGS: ${action.type}, setlogitem: ${SET_LOG_ITEM}, is euqal = ${
-  //     action.type == SET_LOG_ITEM
-  //   }, action activity: ${action.activity}`
-  // );
   switch (action.type) {
+    case REMOVE_LOG: {
+      const logItems = [...state.logItems];
+
+      const newItems = logItems.filter((x) => x.id != action.id);
+
+      return { ...state, logItems: newItems };
+    }
     case SET_LOG_ITEM: {
       const logItems = [...state.logItems];
 

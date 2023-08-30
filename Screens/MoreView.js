@@ -1,5 +1,6 @@
 import React, { useLayoutEffect } from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Text, Alert, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
 import {
   getDatesForPeriod,
   getDateString,
@@ -7,10 +8,13 @@ import {
 } from "../BusinessLogic/CalendarHelper";
 import IconButton from "../Components/IconButton";
 import { useSelector } from "react-redux";
+import { removeLog } from "../Store/actions/logs";
 
 const MoreView = (props) => {
   const { navigation } = props;
   const { period, date } = props.route.params;
+
+  const dispatch = useDispatch();
 
   const d = new Date(date);
   useLayoutEffect(() => {
@@ -54,6 +58,25 @@ const MoreView = (props) => {
     //console.log(log);
   };
 
+  const removeLogItem = (id) => {
+    //(`Removing ${id}`);
+    dispatch(removeLog(id));
+  };
+
+  const onRemoveLog = (logId) => {
+    Alert.alert("Remove Item", `You are going to remove log item, Continue?`, [
+      {
+        text: "No",
+        onPress: () => console.log("No Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => removeLogItem(logId),
+      },
+    ]);
+  };
+
   const normalizeText = (text, count) => {
     var res = text.replace(/[\r\n]/gm, "");
 
@@ -82,6 +105,14 @@ const MoreView = (props) => {
               onEditLog(log);
             }}
             icon="ios-brush"
+          />
+        </View>
+        <View style={styles.buttonCell}>
+          <IconButton
+            onPress={() => {
+              onRemoveLog(log.id);
+            }}
+            icon="ios-close-circle"
           />
         </View>
       </View>
@@ -161,15 +192,15 @@ const styles = StyleSheet.create({
     backgroundColor: "dodgerblue",
   },
   dateCell: {
-    width: "29%",
+    width: "25%",
     padding: 5,
   },
   typeCell: {
-    width: "32%",
+    width: "30%",
     padding: 5,
   },
   durationCell: {
-    width: "29%",
+    width: "25%",
     padding: 5,
   },
   buttonCell: {

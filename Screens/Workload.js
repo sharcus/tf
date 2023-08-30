@@ -34,16 +34,20 @@ const Workload = (props) => {
   const allItems = useSelector((state) => state.items.activityItems);
   const activityItems = allItems.filter((activity) => activity.enabled);
 
-  const pa = getPlanedActivity(config.plannedActivity, activityItems);
+  const pa = config
+    ? getPlanedActivity(config.plannedActivity, activityItems)
+    : [];
 
-  let th = config.totalHours;
+  let th = config ? config.totalHours : 0;
   let tp = 100;
   pa.forEach((activity) => {
     th -= activity.workload.length > 0 ? parseFloat(activity.workload) : 0;
     tp -= activity.percent.length > 0 ? parseFloat(activity.percent) : 0;
   });
 
-  const [initialHours, setInitialHours] = useState(config.totalHours);
+  const [initialHours, setInitialHours] = useState(
+    config ? config.totalHours : 0
+  );
   const [totalHours, setTotalHours] = useState(Math.round(th * 10) / 10);
   const [totalPercentage, setTotalPercentage] = useState(
     Math.round(tp * 10) / 10
