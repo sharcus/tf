@@ -1,3 +1,9 @@
+31/08/2023
++ Fix label in Workload screen for no-plan view
++ Align controls in Statistics vertically
++ Add "No data" panel for Statistics
++ Add "No data" panel for Activities
+
 30/08/2023
 ----------------------
 + update expo and general dependencies

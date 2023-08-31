@@ -82,6 +82,9 @@ const Statistics = (props) => {
     checkboxes.push(chk);
   }
 
+  console.log(`Is Empty Data: ${isEmptyData(data)}`);
+  console.log(data);
+
   return (
     <View style={styles.screen}>
       <View style={styles.headerPanel}>
@@ -101,8 +104,10 @@ const Statistics = (props) => {
           }}
         />
       </View>
-      <View style={styles.checkboxParent}>{checkboxes}</View>
-      {data.datasets.length > 0 && (
+      {!isEmptyData(data) && (
+        <View style={styles.checkboxParent}>{checkboxes}</View>
+      )}
+      {!isEmptyData(data) && (
         <LineChart
           data={data}
           width={width}
@@ -124,6 +129,11 @@ const Statistics = (props) => {
             borderRadius: 0,
           }}
         />
+      )}
+      {isEmptyData(data) && (
+        <View>
+          <Text>No data for selected period</Text>
+        </View>
       )}
     </View>
   );
@@ -166,7 +176,7 @@ const buildChartData = (activities, colors, items, from, to) => {
     //if (!activityIndex) continue;
 
     const cur = activities.find((x) => x.id == item.type);
-    if (!cur.enabled) continue;
+    if (!cur || !cur.enabled) continue;
 
     var duration = getDuration(item);
     var dateIndex = Math.floor(
@@ -181,9 +191,25 @@ const buildChartData = (activities, colors, items, from, to) => {
       data.datasets[activityIndex].data[dateIndex] += duration;
   }
 
-  console.log(`Counts of datasets: ${data.datasets.length}`);
+  //console.log(`Counts of datasets: ${data.datasets.length}`);
 
   return data;
+};
+
+const isEmptyData = (data) => {
+  if (data && data.datasets && data.datasets.length > 0) {
+    for (const dataset of data.datasets) {
+      if (dataset && dataset.data && dataset.data.length > 0) {
+        for (const i of dataset.data) {
+          if (i > 0) {
+            return false;
+          }
+        }
+      }
+    }
+  }
+
+  return true;
 };
 
 const getDuration = (log) => {
@@ -206,7 +232,7 @@ const zeroPad = (num, places) => String(num).padStart(places, "0");
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   checkboxContainer: {

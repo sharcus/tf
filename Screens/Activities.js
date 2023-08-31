@@ -88,12 +88,27 @@ const Activities = (props) => {
 
   return (
     <ScrollView>
-      <View style={styles.activitiesPanel}>{items}</View>
+      {activityItems.length > 0 && (
+        <View style={styles.activitiesPanel}>{items}</View>
+      )}
+      {activityItems.length == 0 && (
+        <View style={styles.noActivityPanel}>
+          <Text style={styles.noActivityText}>
+            No activity items created yet
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  noActivityPanel: {
+    padding: 20,
+  },
+  noActivityText: {
+    textAlign: "center",
+  },
   activitiesPanel: {
     paddingTop: 20,
   },
