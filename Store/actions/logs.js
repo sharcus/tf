@@ -4,14 +4,16 @@ export const REMOVE_LOG = "REMOVE_LOG";
 export const setLogItem = (activity, from, to, description, id) => {
   return {
     type: SET_LOG_ITEM,
-    activity: activity,
-    from: from,
-    to: to,
-    description: description,
-    id: id,
+    payload: {
+      activity: activity,
+      from: from,
+      to: to,
+      description: description,
+      id: id,
+    },
   };
 };
 
 export const removeLog = (logId) => {
-  return { type: REMOVE_LOG, id: logId };
+  return { type: REMOVE_LOG, payload: logId };
 };

@@ -22,8 +22,9 @@ const Statistics = (props) => {
   const [from, to] = getDatesForPeriod(date, "month");
 
   const activityItems = useSelector((state) => state.items.activityItems);
+  let allActivities = JSON.parse(JSON.stringify(activityItems));
 
-  const [activities, setActivities] = useState(activityItems);
+  const [activities, setActivities] = useState(allActivities);
 
   const logItems = useSelector((state) => state.logs.logItems);
 
@@ -74,7 +75,15 @@ const Statistics = (props) => {
             updateCheckedStatus(activities[i].id, checked);
           }}
         />
-        <Text style={{ backgroundColor: colors[i], width: 80, marginLeft: 5 }}>
+        <Text
+          style={{
+            backgroundColor: colors[i],
+            width: 80,
+            marginLeft: 5,
+            paddingLeft: 5,
+            borderRadius: 3,
+          }}
+        >
           {activities[i].name}
         </Text>
       </View>
@@ -104,9 +113,9 @@ const Statistics = (props) => {
           }}
         />
       </View>
-      {!isEmptyData(data) && (
-        <View style={styles.checkboxParent}>{checkboxes}</View>
-      )}
+
+      <View style={styles.checkboxParent}>{checkboxes}</View>
+
       {!isEmptyData(data) && (
         <LineChart
           data={data}

@@ -22,7 +22,7 @@ const itemsReducer = (state = initialState, action) => {
     case ADD_NEW_PERIOD_CONFIG: {
       const planConfigList = [...state.planConfig];
       console.log(`Before adding new period: ${planConfigList.length}`);
-      planConfigList.push(action.config);
+      planConfigList.push(action.payload);
       console.log(`After adding new period: ${planConfigList.length}`);
 
       return { ...state, planConfig: planConfigList };
@@ -31,38 +31,35 @@ const itemsReducer = (state = initialState, action) => {
       const planConfigList = [...state.planConfig];
 
       for (const config of planConfigList) {
-        config.totalHours = config.chosenDays.length * action.hoursPerDay;
+        config.totalHours = config.chosenDays.length * action.payload;
       }
 
       return {
         ...state,
         planConfig: planConfigList,
-        hoursPerDayDefault: action.hoursPerDay,
+        hoursPerDayDefault: action.payload,
       };
     }
     case SET_PLANNED_ACTIVITY: {
       const planConfigList = [...state.planConfig];
+      const item = action.payload;
 
       console.log(`Befor: ${planConfigList}`);
 
       const planConfig = planConfigList.find(
-        (x) => x.year == action.year && x.month == action.month
+        (x) => x.year == item.year && x.month == item.month
       );
-
-      //console.log(`planConfig: ${planConfig}`);
 
       const newPlanConfig = {
         year: planConfig.year,
         month: planConfig.month,
         chosenDays: planConfig.chosenDays,
         totalHours: planConfig.totalHours,
-        plannedActivity: [...action.activity],
+        plannedActivity: [...item.activity],
       };
 
       const newList = planConfigList.filter((x) => x != planConfig);
       newList.push(newPlanConfig);
-
-      //console.log(`after: ${newList}`);
 
       return { ...state, planConfig: newList };
     }
@@ -71,15 +68,17 @@ const itemsReducer = (state = initialState, action) => {
       const hoursPerDay = state.hoursPerDayDefault;
       const planConfigList = [...state.planConfig];
 
+      const item = action.payload;
+
       const planConfig = planConfigList.find(
-        (x) => x.year == action.year && x.month == action.month
+        (x) => x.year == item.year && x.month == item.month
       );
 
-      const exists = planConfig.chosenDays.indexOf(action.day) != -1;
+      const exists = planConfig.chosenDays.indexOf(item.day) != -1;
 
       const newChosenDay = exists
-        ? planConfig.chosenDays.filter((x) => x != action.day)
-        : [...planConfig.chosenDays, action.day];
+        ? planConfig.chosenDays.filter((x) => x != item.day)
+        : [...planConfig.chosenDays, item.day];
 
       const newPlanConfig = {
         year: planConfig.year,
@@ -96,14 +95,15 @@ const itemsReducer = (state = initialState, action) => {
     }
     case REMOVE_ACTIVITY: {
       const activityItems = [...state.activityItems];
-      const newItems = activityItems.filter((x) => x.id != action.id);
+      const newItems = activityItems.filter((x) => x.id != action.payload);
 
       return { ...state, activityItems: newItems };
     }
     case SAVE_ACTIVITY: {
       const activityItems = [...state.activityItems];
+      const item = action.payload;
 
-      let activity = activityItems.find((x) => x.id == action.id);
+      let activity = activityItems.find((x) => x.id == item.id);
       if (!activity) {
         let max = 0;
 
@@ -116,22 +116,19 @@ const itemsReducer = (state = initialState, action) => {
           );
         }
 
-        activity = { id: max + 1, enabled: true, name: action.name };
+        activity = { id: max + 1, enabled: true, name: item.name };
       } else {
-        activity.name = action.name;
+        activity.name = item.name;
       }
       const resultArray = getUpdatedArray(activityItems, activity);
-
-      //console.log(resultArray);
 
       return { ...state, activityItems: resultArray };
     }
     case TOGGLE_ACTIVITY_STATE: {
       const activityItems = [...state.activityItems];
 
-      let activity = activityItems.find((x) => x.id == action.id);
+      let activity = activityItems.find((x) => x.id == action.payload);
       if (activity) {
-        //console.log(`Enabled option:? ${activity.enabled} for ${activity.name}`);
         activity.enabled = !activity.enabled;
       }
 

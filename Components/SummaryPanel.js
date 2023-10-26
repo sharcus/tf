@@ -35,7 +35,12 @@ export const SummaryPanel = (props) => {
 
   const hourPerDay = useSelector((state) => state.items.hoursPerDayDefault);
   const planConfig = useSelector((state) => state.items.planConfig);
-  const plannedHours = getPlannedHours(planConfig, hourPerDay, from, to);
+  const plannedHours = getPlannedHours(
+    planConfig,
+    Number(hourPerDay),
+    from,
+    to
+  );
 
   const loggedHours = calculateLoggedDuration(filteredLogItems);
 

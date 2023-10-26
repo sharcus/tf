@@ -49,7 +49,7 @@ const Plan = (props) => {
 
   const updateHoursPerDay = (x) => {
     console.log(`changing hours per day to ${x}`);
-    dispatch(setHoursPerDay(x));
+    dispatch(setHoursPerDay(Number(x)));
   };
 
   const onPeriodChanged = (year, month) => {

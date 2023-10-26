@@ -9,29 +9,30 @@ const logsReducer = (state = initialState, action) => {
     case REMOVE_LOG: {
       const logItems = [...state.logItems];
 
-      const newItems = logItems.filter((x) => x.id != action.id);
+      const newItems = logItems.filter((x) => x.id != action.payload);
 
       return { ...state, logItems: newItems };
     }
     case SET_LOG_ITEM: {
       const logItems = [...state.logItems];
+      const item = action.payload;
 
-      let log = logItems.find((x) => x.id == action.id);
+      let log = logItems.find((x) => x.id == item.id);
       if (!log) {
         const max = getNextId(logItems);
 
         log = {
           id: max + 1,
-          type: action.activity,
-          from: action.from,
-          to: action.to,
-          description: action.description,
+          type: item.activity,
+          from: item.from,
+          to: item.to,
+          description: item.description,
         };
       } else {
-        log.type = action.activity;
-        log.from = action.from;
-        log.to = action.to;
-        log.description = action.description;
+        log.type = item.activity;
+        log.from = item.from;
+        log.to = item.to;
+        log.description = item.description;
       }
       const resultArray = getUpdatedArray(logItems, log);
 

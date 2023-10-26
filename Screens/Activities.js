@@ -40,17 +40,21 @@ const Activities = (props) => {
   };
 
   const onRemoveItem = (id, name) =>
-    Alert.alert("Remove Item", `You are going to remove ${name}, Continue?`, [
-      {
-        text: "No",
-        onPress: () => console.log("No Pressed"),
-        style: "cancel",
-      },
-      {
-        text: "Yes",
-        onPress: () => removeActivityItem(id),
-      },
-    ]);
+    Alert.alert(
+      "Remove Item",
+      `You are going to remove activity "${name}", Continue?`,
+      [
+        {
+          text: "No",
+          onPress: () => console.log("No Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => removeActivityItem(id),
+        },
+      ]
+    );
 
   const onToggleState = (id) => {
     dispatch(toggleActivityState(id));

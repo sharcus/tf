@@ -63,18 +63,29 @@ const MoreView = (props) => {
     dispatch(removeLog(id));
   };
 
-  const onRemoveLog = (logId) => {
-    Alert.alert("Remove Item", `You are going to remove log item, Continue?`, [
-      {
-        text: "No",
-        onPress: () => console.log("No Pressed"),
-        style: "cancel",
-      },
-      {
-        text: "Yes",
-        onPress: () => removeLogItem(logId),
-      },
-    ]);
+  const onRemoveLog = (log) => {
+    const date = getDateString(log.from);
+    const from = getTimeString(log.from);
+    const to = getTimeString(log.to);
+    const type = getTypeDescription(log.type);
+
+    const name = `${type} at ${date} ${from} - ${to}`;
+
+    Alert.alert(
+      "Remove Item",
+      `You are going to remove log item for\n "${name}",\n Continue?`,
+      [
+        {
+          text: "No",
+          onPress: () => console.log("No Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => removeLogItem(log.id),
+        },
+      ]
+    );
   };
 
   const normalizeText = (text, count) => {
@@ -110,7 +121,7 @@ const MoreView = (props) => {
         <View style={styles.buttonCell}>
           <IconButton
             onPress={() => {
-              onRemoveLog(log.id);
+              onRemoveLog(log);
             }}
             icon="ios-close-circle"
           />

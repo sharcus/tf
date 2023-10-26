@@ -1,4 +1,13 @@
+26/10/2023
++ Adapt Flux Naming Convetions for Redux reducers
++ Align Text in Statistics Labels - add more space from left side
++ Fix Planned Hours value in Summary
++ Fix that after user clear activity checkbox in Statistics - it is not possible to create new log of such type in Summary
++ Show checkbox panel in Statistics always (fix issue that it is not possible to see chart if all chks is cleared)
++ Update messages on removing Activity/Log
+
 31/08/2023
+----------------------
 + Fix label in Workload screen for no-plan view
 + Align controls in Statistics vertically
 + Add "No data" panel for Statistics
