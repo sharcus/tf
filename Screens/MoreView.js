@@ -8,7 +8,8 @@ import {
 } from "../BusinessLogic/CalendarHelper";
 import IconButton from "../Components/IconButton";
 import { useSelector } from "react-redux";
-import { removeLog } from "../Store/actions/logs";
+import { removeLog } from "../Store/reducers/logs";
+import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
 
 const MoreView = (props) => {
   const { navigation } = props;
@@ -32,7 +33,9 @@ const MoreView = (props) => {
     return item ? item.name : "unknown activity";
   };
 
-  const logItems = useSelector((state) => state.logs.logItems);
+  const logItems = useSelector((state) =>
+    state.logs.logItems.map((x) => unstringifyLogItemDates(x))
+  );
 
   for (const log of logItems)
     console.log(`${log.from} - ${log.to} : ${log.description}`);

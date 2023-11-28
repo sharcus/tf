@@ -227,13 +227,9 @@ export const getPlannedHours = (planConfig, hourPerDay, from, to) => {
 
   let date = new Date(from);
   while (date < to) {
-    //console.log(`Checking date: ${date.toString()}`);
-
     const month = date.getMonth();
     const year = date.getFullYear();
     const config = planConfig.find((x) => x.year == year && x.month == month);
-
-    //console.log(`Planned config ${JSON.stringify(planConfig)}`);
 
     if (config) {
       const dayNum = date.getDate().toString();
@@ -242,8 +238,6 @@ export const getPlannedHours = (planConfig, hourPerDay, from, to) => {
     }
     date = addDays(date, 1);
   }
-
-  //console.log(`Total Planned Hours: ${total}`);
 
   return total;
 };

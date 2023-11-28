@@ -12,6 +12,7 @@ import {
   calculateLoggedDuration,
   groupLoggedItems,
 } from "../BusinessLogic/LoggedItemsHelper";
+import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
 
 export const SummaryPanel = (props) => {
   const { date, type } = props;
@@ -20,7 +21,12 @@ export const SummaryPanel = (props) => {
 
   const [from, to] = getDatesForPeriod(date, type);
 
-  const logItems = useSelector((state) => state.logs.logItems);
+  const logItems = useSelector((state) =>
+    state.logs.logItems.map((x) => unstringifyLogItemDates(x))
+  );
+
+  //console.log(logItems);
+
   const filteredLogItems = logItems.filter(
     (x) => x.from >= from && to >= x.from
   );
@@ -35,6 +41,9 @@ export const SummaryPanel = (props) => {
 
   const hourPerDay = useSelector((state) => state.items.hoursPerDayDefault);
   const planConfig = useSelector((state) => state.items.planConfig);
+
+  console.log(JSON.stringify(planConfig));
+
   const plannedHours = getPlannedHours(
     planConfig,
     Number(hourPerDay),

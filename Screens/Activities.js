@@ -10,7 +10,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 
 import IconButton from "../Components/IconButton";
-import { removeActivity, toggleActivityState } from "../Store/actions/items";
+import { removeActivity, toggleActivityState } from "../Store/reducers/items";
 
 const Activities = (props) => {
   const { navigation } = props;

@@ -1,17 +1,20 @@
 export const getPlanedActivity = (plannedActivity, enabledActivityItems) => {
-  let result = plannedActivity;
-
-  //console.log(enabledActivityItems);
-
+  let result = [];
   if (!plannedActivity || plannedActivity.length == 0) {
     result = enabledActivityItems.map((x) => ({
       id: x.id,
       workload: 0,
       percent: 0,
     }));
+  } else {
+    for (const pa of plannedActivity) {
+      result.push({
+        id: pa.id,
+        workload: pa.workload,
+        percent: pa.percent,
+      });
+    }
   }
-
-  //console.log(`result: ${result}`);
   return result;
 };
 

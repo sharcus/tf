@@ -16,7 +16,7 @@ import {
   toggleDay,
   setHoursPerDay,
   addNewPeriodConfig,
-} from "../Store/actions/items";
+} from "../Store/reducers/items";
 import { buildPlanConfig } from "../BusinessLogic/PlanConfigBuilder";
 
 const Plan = (props) => {
@@ -44,7 +44,12 @@ const Plan = (props) => {
   );
 
   const toggleDate = (x) => {
-    dispatch(toggleDay(x, currentYear, currentMonth));
+    const payload = {
+      day: x,
+      year: currentYear,
+      month: currentMonth,
+    };
+    dispatch(toggleDay(payload));
   };
 
   const updateHoursPerDay = (x) => {

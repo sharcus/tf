@@ -10,7 +10,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { useSelector, useDispatch } from "react-redux";
 import { getUpdatedArray } from "../BusinessLogic/CommonHelpers";
 import { getPlanedActivity } from "../BusinessLogic/PlanConfigBuilder";
-import { setConfigPlannedActivity } from "../Store/actions/items";
+import { setConfigPlannedActivity } from "../Store/reducers/items";
 
 import FeederButton from "../Components/Button";
 
@@ -60,9 +60,15 @@ const Workload = (props) => {
   };
 
   const onApplyWorkload = () => {
-    dispatch(
-      setConfigPlannedActivity(plannedActivity, currentYear, currentMonth)
-    );
+    const payload = {
+      activity: plannedActivity,
+      year: currentYear,
+      month: currentMonth,
+      chosenDays: [],
+      totalHours: 0,
+    };
+
+    dispatch(setConfigPlannedActivity(payload));
   };
 
   const updatePercentage = (index, text) => {

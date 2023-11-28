@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 
 import FeederButton from "../Components/Button";
-import { saveActivity } from "../Store/actions/items";
+import { saveActivity } from "../Store/reducers/items";
 
 const EditActivity = (props) => {
   const { navigation } = props;
@@ -29,7 +29,12 @@ const EditActivity = (props) => {
       <FeederButton
         style={styles.button}
         onPress={() => {
-          dispatch(saveActivity(id, nameValue));
+          const payload = {
+            id: id,
+            name: nameValue,
+          };
+
+          dispatch(saveActivity(payload));
           props.navigation.goBack();
         }}
         Text="Apply"

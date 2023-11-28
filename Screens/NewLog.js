@@ -17,7 +17,7 @@ import {
   getLongDateString,
   getTimeString,
 } from "../BusinessLogic/CalendarHelper";
-import { setLogItem } from "../Store/actions/logs";
+import { setLogItem } from "../Store/reducers/logs";
 
 const NewLog = (props) => {
   const { navigation } = props;
@@ -80,7 +80,14 @@ const NewLog = (props) => {
       to.getMinutes()
     );
 
-    dispatch(setLogItem(activity, fromDate, toDate, description, id));
+    const payload = {
+      id: id,
+      acivity: activity,
+      from: fromDate,
+      to: toDate,
+      description: description,
+    };
+    dispatch(setLogItem(payload));
     //props.navigation.navigate("Summary");
     props.navigation.goBack();
   };

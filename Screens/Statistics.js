@@ -14,6 +14,7 @@ import {
 } from "../BusinessLogic/CalendarHelper";
 
 import FeederButton from "../Components/Button";
+import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
 
 const Statistics = (props) => {
   const [date, setDate] = useState(new Date());
@@ -26,7 +27,9 @@ const Statistics = (props) => {
 
   const [activities, setActivities] = useState(allActivities);
 
-  const logItems = useSelector((state) => state.logs.logItems);
+  const logItems = useSelector((state) =>
+    state.logs.logItems.map((x) => unstringifyLogItemDates(x))
+  );
 
   const filteredLogItems = logItems.filter(
     (x) => x.from >= from && to >= x.from
