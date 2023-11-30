@@ -25,7 +25,7 @@ export const SummaryPanel = (props) => {
     state.logs.logItems.map((x) => unstringifyLogItemDates(x))
   );
 
-  //console.log(logItems);
+  //console.log("Log Items:" + logItems);
 
   const filteredLogItems = logItems.filter(
     (x) => x.from >= from && to >= x.from
@@ -34,6 +34,12 @@ export const SummaryPanel = (props) => {
   const activityItems = useSelector((state) => state.items.activityItems);
 
   const getTypeDescription = (activityId) => {
+    // console.log(
+    //   `Look for: ${activityId}, Activity items: ${activityItems.map((x) =>
+    //     JSON.stringify(x)
+    //   )}`
+    // );
+
     const item = activityItems.find((x) => x.id == activityId);
 
     return item ? item.name : "unknown activity";
