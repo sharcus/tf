@@ -1,7 +1,7 @@
 export const calculateLoggedDuration = (items) => {
   let totalMiliseconds = 0;
 
-  console.log(items);
+  //console.log(items);
 
   for (const log of items) {
     const from = log.from.getTime();

@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 
+import { stringifyLogItemDates } from "../BusinessLogic/DateHelper";
+
 import { useSelector, useDispatch } from "react-redux";
 import FeederButton from "../Components/Button";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -80,13 +82,16 @@ const NewLog = (props) => {
       to.getMinutes()
     );
 
-    const payload = {
+    const logItem = {
       id: id,
-      acivity: activity,
+      type: activity,
       from: fromDate,
       to: toDate,
       description: description,
     };
+
+    const payload = stringifyLogItemDates(logItem);
+
     dispatch(setLogItem(payload));
     //props.navigation.navigate("Summary");
     props.navigation.goBack();

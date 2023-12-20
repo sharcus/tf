@@ -17,7 +17,7 @@ import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
 export const SummaryPanel = (props) => {
   const { date, type } = props;
 
-  console.log(`Refreshing ${type} for ${date}`);
+  //console.log(`Refreshing ${type} for ${date}`);
 
   const [from, to] = getDatesForPeriod(date, type);
 
@@ -48,7 +48,7 @@ export const SummaryPanel = (props) => {
   const hourPerDay = useSelector((state) => state.items.hoursPerDayDefault);
   const planConfig = useSelector((state) => state.items.planConfig);
 
-  console.log(JSON.stringify(planConfig));
+  //console.log(JSON.stringify(planConfig));
 
   const plannedHours = getPlannedHours(
     planConfig,
