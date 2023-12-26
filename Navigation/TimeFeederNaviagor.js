@@ -1,19 +1,19 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import NewLog from "../Screens/NewLog";
-import Statistics from "../Screens/Statistics";
-import Summary from "../Screens/Summary";
-import MoreView from "../Screens/MoreView";
+import NewLog from "../Screens/NewLog/NewLog";
+import Statistics from "../Screens/Statistics/Statistics";
+import Summary from "../Screens/Summary/Summary";
+import MoreView from "../Screens/MoreView/MoreView";
 
-import Plan from "../Screens/Plan";
-import Workload from "../Screens/Workload";
+import Plan from "../Screens/Plan/Plan";
+import Workload from "../Screens/Workload/Workload";
 
-import Activities from "../Screens/Activities";
-import EditActivity from "../Screens/EditActivity";
+import Activities from "../Screens/Activities/Activities";
+import EditActivity from "../Screens/EditActivity/EditActivity";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-import IconButton from "../Components/IconButton";
+import IconButton from "../Components/IconButton/IconButton";
 
 const HomeNav = () => {
   const HomeStack = createStackNavigator();
@@ -75,7 +75,6 @@ const TimeFeederNavigator = () => {
             iconName = "ios-analytics";
           }
 
-          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "dodgerblue",

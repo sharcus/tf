@@ -14,10 +14,6 @@ const logsSlice = createSlice({
       const logItems = state.logItems;
       const item = action.payload;
 
-      // console.log(`Trying to save: ${JSON.stringify(item)}`);
-      // console.log(`item.from ${item.from instanceof Date}`);
-      // console.log(`item.to ${item.to instanceof Date}`);
-
       let log = logItems.find((x) => x.id == item.id);
       if (!log) {
         const max = getNextId(logItems);

@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import FeederButton from "./Button";
-import { getFullMonthName } from "../BusinessLogic/CalendarHelper";
+import { View, Text } from "react-native";
+import FeederButton from "../Button/Button";
+import { getFullMonthName } from "../../BusinessLogic/CalendarHelper";
+
+import styles from "./styles";
 
 export const NoConfigPanel = (props) => {
   const periodLabel = `${getFullMonthName(props.month)} ${props.year}`;
@@ -22,13 +24,3 @@ export const NoConfigPanel = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  periodLabel: {
-    fontWeight: "bold",
-  },
-  textContainer: {
-    display: "flex",
-    flexDirection: "row",
-  },
-});

@@ -8,16 +8,18 @@ import {
   StyleSheet,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import FeederButton from "../Components/Button";
-import { NoConfigPanel } from "../Components/NoConfigPanel";
-import PlanCalendar from "../Components/PlanCalendar";
-import { PeriodSelector } from "../Components/PeriodSelector";
+import FeederButton from "../../Components/Button/Button";
+import { NoConfigPanel } from "../../Components/NoConfigPanel/NoConfigPanel";
+import PlanCalendar from "../../Components/PlanCalendar/PlanCalendar";
+import { PeriodSelector } from "../../Components/PeriodSelector/PeriodSelector";
 import {
   toggleDay,
   setHoursPerDay,
   addNewPeriodConfig,
-} from "../Store/reducers/items";
-import { buildPlanConfig } from "../BusinessLogic/PlanConfigBuilder";
+} from "../../Store/reducers/items";
+import { buildPlanConfig } from "../../BusinessLogic/PlanConfigBuilder";
+
+import styles from "./styles";
 
 const Plan = (props) => {
   const { navigation } = props;
@@ -53,7 +55,6 @@ const Plan = (props) => {
   };
 
   const updateHoursPerDay = (x) => {
-    console.log(`changing hours per day to ${x}`);
     dispatch(setHoursPerDay(Number(x)));
   };
 
@@ -125,38 +126,5 @@ const Plan = (props) => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    width: "30%",
-  },
-  input: {
-    width: 200,
-    height: 32,
-    backgroundColor: "white",
-    borderColor: "#cccccc",
-    borderWidth: 1,
-    borderRadius: 6,
-    fontWeight: "bold",
-    paddingStart: 5,
-  },
-  inputLabel: {
-    width: 200,
-    textAlign: "right",
-    paddingRight: 20,
-    marginTop: 5,
-  },
-  inputRow: {
-    display: "flex",
-    flexDirection: "row",
-    margin: 3,
-  },
-  inputPanel: {
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: 20,
-    marginTop: 20,
-  },
-});
 
 export default Plan;

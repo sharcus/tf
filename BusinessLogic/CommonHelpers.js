@@ -16,7 +16,6 @@ export const getUpdatedArray = (array, updatedItem) => {
 };
 
 export const getNextId = (array) => {
-  // ! this is a test of exclamation comment
   if (array.length == 0) return 1;
 
   const max = Math.max.apply(

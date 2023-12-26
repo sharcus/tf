@@ -1,5 +1,5 @@
 import React from "react";
-import { SummaryPanel } from "../SummaryPanel";
+import { SummaryPanel } from "../SummaryPanel/SummaryPanel";
 
 export const MonthPanel = (props) => {
   const { date } = props;

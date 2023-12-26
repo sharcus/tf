@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import Checkbox from "expo-checkbox";
 import { useSelector } from "react-redux";
-import { getColors } from "../BusinessLogic/ColorsHelper";
-import { getUpdatedArray } from "../BusinessLogic/CommonHelpers";
+import { getColors } from "../../BusinessLogic/ColorsHelper";
+import { getUpdatedArray } from "../../BusinessLogic/CommonHelpers";
 
 import { LineChart } from "react-native-chart-kit";
+import styles from "./styles";
 
 import {
   getDatesForPeriod,
   getMonthYearString,
   addMonthsForDate,
-} from "../BusinessLogic/CalendarHelper";
+} from "../../BusinessLogic/CalendarHelper";
 
-import FeederButton from "../Components/Button";
-import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
+import FeederButton from "../../Components/Button/Button";
+import { unstringifyLogItemDates } from "../../BusinessLogic/DateHelper";
 
 const Statistics = (props) => {
   const [date, setDate] = useState(new Date());
@@ -35,13 +36,9 @@ const Statistics = (props) => {
     (x) => x.from >= from && to >= x.from
   );
 
-  // TODO: add support for more than 15 colors
   const colors = getColors();
 
   const data = buildChartData(activities, colors, filteredLogItems, from, to);
-
-  // console.log("Parse data");
-  // console.log(data);
 
   const segmentCount = 3;
 
@@ -93,9 +90,6 @@ const Statistics = (props) => {
     );
     checkboxes.push(chk);
   }
-
-  console.log(`Is Empty Data: ${isEmptyData(data)}`);
-  console.log(data);
 
   return (
     <View style={styles.screen}>
@@ -155,12 +149,8 @@ const buildChartData = (activities, colors, items, from, to) => {
   const activitiesIndicies = {};
   const data = { labels: [], datasets: [], legend: [] };
 
-  // initialize dataset items & legend
-
   for (let i = 0; i < activities.length; i++) {
     const activity = activities[i];
-    //if (!activity.enabled) continue;
-    //data.legend.push(activity.name);
     activitiesIndicies[activity.id] = i;
 
     const dataSetItem = { data: [], strokeWidth: 1, color: () => colors[i] };
@@ -185,7 +175,6 @@ const buildChartData = (activities, colors, items, from, to) => {
   // fill items
   for (const item of items) {
     var activityIndex = activitiesIndicies[item.type];
-    //if (!activityIndex) continue;
 
     const cur = activities.find((x) => x.id == item.type);
     if (!cur || !cur.enabled) continue;
@@ -195,15 +184,9 @@ const buildChartData = (activities, colors, items, from, to) => {
       (item.from.getTime() - from.getTime()) / (1000 * 3600 * 24)
     );
 
-    console.log(
-      `activity=${activityIndex}, duration=${duration}, dateIndex=${dateIndex}`
-    );
-
     if (data.datasets.length > activityIndex)
       data.datasets[activityIndex].data[dateIndex] += duration;
   }
-
-  //console.log(`Counts of datasets: ${data.datasets.length}`);
 
   return data;
 };
@@ -236,51 +219,9 @@ const getTimeFormatFromMinutes = (x) => {
   const minutes = Math.round(x % 60);
 
   return `${zeroPad(hours, 2)}:${zeroPad(minutes, 2)}`;
-  //return x;
 };
 
 const zeroPad = (num, places) => String(num).padStart(places, "0");
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    margin: 10,
-  },
-  checkboxParent: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  headerPanel: {
-    width: "100%",
-    flexDirection: "row",
-  },
-  buttonPanel: {
-    width: "100%",
-    height: 60,
-    flexDirection: "row",
-    paddingBottom: 26,
-  },
-
-  button: {
-    width: "48%",
-  },
-
-  dateLabel: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000000",
-    textAlign: "center",
-    width: "87%",
-  },
-  dateButton: {
-    width: "5%",
-  },
-});
 
 Statistics.navigationOptions = (navData) => {
   return {

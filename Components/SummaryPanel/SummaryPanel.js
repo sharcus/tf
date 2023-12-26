@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
 
 import { useSelector } from "react-redux";
 import {
@@ -7,25 +7,23 @@ import {
   getTimeString,
   getDatesForPeriod,
   getPlannedHours,
-} from "../BusinessLogic/CalendarHelper";
+} from "../../BusinessLogic/CalendarHelper";
 import {
   calculateLoggedDuration,
   groupLoggedItems,
-} from "../BusinessLogic/LoggedItemsHelper";
-import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
+} from "../../BusinessLogic/LoggedItemsHelper";
+import { unstringifyLogItemDates } from "../../BusinessLogic/DateHelper";
+
+import styles from "./styles";
 
 export const SummaryPanel = (props) => {
   const { date, type } = props;
-
-  //console.log(`Refreshing ${type} for ${date}`);
 
   const [from, to] = getDatesForPeriod(date, type);
 
   const logItems = useSelector((state) =>
     state.logs.logItems.map((x) => unstringifyLogItemDates(x))
   );
-
-  //console.log("Log Items:" + logItems);
 
   const filteredLogItems = logItems.filter(
     (x) => x.from >= from && to >= x.from
@@ -34,12 +32,6 @@ export const SummaryPanel = (props) => {
   const activityItems = useSelector((state) => state.items.activityItems);
 
   const getTypeDescription = (activityId) => {
-    // console.log(
-    //   `Look for: ${activityId}, Activity items: ${activityItems.map((x) =>
-    //     JSON.stringify(x)
-    //   )}`
-    // );
-
     const item = activityItems.find((x) => x.id == activityId);
 
     return item ? item.name : "unknown activity";
@@ -47,8 +39,6 @@ export const SummaryPanel = (props) => {
 
   const hourPerDay = useSelector((state) => state.items.hoursPerDayDefault);
   const planConfig = useSelector((state) => state.items.planConfig);
-
-  //console.log(JSON.stringify(planConfig));
 
   const plannedHours = getPlannedHours(
     planConfig,
@@ -102,42 +92,3 @@ export const SummaryPanel = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    marginBottom: 20,
-    marginTop: 20,
-    display: "flex",
-    flexDirection: "column",
-  },
-  headerLabel: {
-    fontSize: 22,
-    color: "dodgerblue",
-    marginLeft: 20,
-    marginBottom: 10,
-  },
-  activityTable: {
-    margin: 10,
-    borderColor: "#eeeeff",
-    borderWidth: 1,
-    borderRadius: 10,
-    backgroundColor: "white",
-    padding: 5,
-    height: "63%",
-  },
-  activityLine: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  activityLabel: {
-    marginLeft: 20,
-    fontSize: 18,
-    fontWeight: "normal",
-    width: "50%",
-  },
-  activityText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    width: "30%",
-  },
-});

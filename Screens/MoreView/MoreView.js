@@ -1,15 +1,17 @@
 import React, { useLayoutEffect } from "react";
-import { ScrollView, View, Text, Alert, StyleSheet } from "react-native";
+import { ScrollView, View, Text, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import {
   getDatesForPeriod,
   getDateString,
   getTimeString,
-} from "../BusinessLogic/CalendarHelper";
-import IconButton from "../Components/IconButton";
+} from "../../BusinessLogic/CalendarHelper";
+import IconButton from "../../Components/IconButton/IconButton";
 import { useSelector } from "react-redux";
-import { removeLog } from "../Store/reducers/logs";
-import { unstringifyLogItemDates } from "../BusinessLogic/DateHelper";
+import { removeLog } from "../../Store/reducers/logs";
+import { unstringifyLogItemDates } from "../../BusinessLogic/DateHelper";
+
+import styles from "./styles";
 
 const MoreView = (props) => {
   const { navigation } = props;
@@ -37,9 +39,6 @@ const MoreView = (props) => {
     state.logs.logItems.map((x) => unstringifyLogItemDates(x))
   );
 
-  for (const log of logItems)
-    console.log(`${log.from} - ${log.to} : ${log.description}`);
-
   const filteredLogItems = logItems
     .filter((x) => x.from >= from && to >= x.from)
     .sort((a, b) => a.from > b.from);
@@ -58,11 +57,9 @@ const MoreView = (props) => {
       typeString: getTypeDescription(log.type),
       description: log.description,
     });
-    //console.log(log);
   };
 
   const removeLogItem = (id) => {
-    //(`Removing ${id}`);
     dispatch(removeLog(id));
   };
 
@@ -166,92 +163,5 @@ const MoreView = (props) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  mainPanel: {
-    marginLeft: 0,
-    paddingLeft: 0,
-  },
-  compositeRow: {
-    display: "flex",
-    flexDirection: "column",
-    borderColor: "#cccccc",
-    borderWidth: 1,
-    borderRadius: 6,
-    height: 60,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    backgroundColor: "white",
-  },
-  borderlesRow: {
-    display: "flex",
-    flexDirection: "row",
-    height: 40,
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    borderColor: "#cccccc",
-    borderWidth: 1,
-    borderRadius: 3,
-    height: 30,
-  },
-  headerRow: {
-    display: "flex",
-    flexDirection: "row",
-    borderColor: "lightgrey",
-    borderWidth: 1,
-    borderRadius: 3,
-    height: 30,
-    backgroundColor: "dodgerblue",
-  },
-  dateCell: {
-    width: "25%",
-    padding: 5,
-  },
-  typeCell: {
-    width: "30%",
-    padding: 5,
-  },
-  durationCell: {
-    width: "25%",
-    padding: 5,
-  },
-  buttonCell: {
-    width: "10%",
-  },
-  descriptionCell: {
-    marginRight: 20,
-    fontSize: 8,
-  },
-  headerTableText: {
-    fontWeight: "bold",
-    backgroundColor: "dodgerblue",
-    color: "white",
-  },
-  cellText: {
-    fontWeight: "normal",
-  },
-  descriptionText: {
-    fontSize: 10,
-    marginLeft: 30,
-  },
-  header: {
-    marginBottom: 20,
-    marginTop: 20,
-    display: "flex",
-    flexDirection: "row",
-  },
-  headerLabel: {
-    fontSize: 22,
-    color: "dodgerblue",
-    marginLeft: 10,
-  },
-  headerText: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "dodgerblue",
-  },
-});
 
 export default MoreView;

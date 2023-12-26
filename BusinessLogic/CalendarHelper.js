@@ -157,8 +157,6 @@ export const isSameWeek = (one, two) => {
   const sunday = new Date(newDate);
   sunday.setHours(23, 59, 59);
 
-  //console.log(`moday ${moday}, sunday ${sunday}`);
-
   if (one > moday && one < sunday) return true;
 
   return false;

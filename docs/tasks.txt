@@ -1,3 +1,8 @@
+26/12/2023
+----------------------
++ Set Current Date from Summary for New Log screen
++ Clean up code
+
 20/12/2023
 + Fix issue that Date cannot be saved in Redux Toolkit (non-serialized issue)
 + Fix issue that type (activity) of a task where not saved properly

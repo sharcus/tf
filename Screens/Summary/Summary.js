@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, useWindowDimensions } from "react-native";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { TabView } from "react-native-tab-view";
 
-import { TodayPanel } from "../Components/Summary/TodayView";
-import { WeekPanel } from "../Components/Summary/WeekPanel";
-import { MonthPanel } from "../Components/Summary/MonthView";
+import { TodayPanel } from "../../Components/Summary/TodayView";
+import { WeekPanel } from "../../Components/Summary/WeekPanel";
+import { MonthPanel } from "../../Components/Summary/MonthView";
 
 import {
   getDatesForPeriod,
   getDateString,
   addMonthsForDate,
-} from "../BusinessLogic/CalendarHelper";
+} from "../../BusinessLogic/CalendarHelper";
 
-import FeederButton from "../Components/Button";
+import FeederButton from "../../Components/Button/Button";
+
+import styles from "./styles";
 
 const Summary = (props) => {
   const layout = useWindowDimensions();
@@ -114,8 +116,8 @@ const Summary = (props) => {
           onPress={() => {
             props.navigation.navigate("NewLog", {
               id: 0,
-              from: new Date().toJSON(),
-              to: new Date().toJSON(),
+              from: date.toJSON(),
+              to: date.toJSON(),
               type: "",
               typeString: "",
               description: "",
@@ -137,46 +139,6 @@ const Summary = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-  mainContent: {
-    flex: 9,
-    width: "100%",
-  },
-
-  headerPanel: {
-    width: "100%",
-    flexDirection: "row",
-  },
-  buttonPanel: {
-    width: "100%",
-    height: 60,
-    flexDirection: "row",
-    paddingBottom: 26,
-  },
-
-  button: {
-    width: "48%",
-  },
-
-  dateLabel: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000000",
-    textAlign: "center",
-    width: "87%",
-    marginTop: 5,
-  },
-  dateButton: {
-    width: "5%",
-  },
-});
 
 Summary.navigationOptions = (navData) => {
   return {

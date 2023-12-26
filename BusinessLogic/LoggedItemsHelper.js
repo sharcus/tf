@@ -1,8 +1,6 @@
 export const calculateLoggedDuration = (items) => {
   let totalMiliseconds = 0;
 
-  //console.log(items);
-
   for (const log of items) {
     const from = log.from.getTime();
     const to = log.to.getTime();
@@ -16,8 +14,6 @@ export const calculateLoggedDuration = (items) => {
 export const milisecondsToHourMinutesArray = (totalMiliseconds) => {
   const totalMinutes = totalMiliseconds / 1000 / 60;
   var totalHours = totalMiliseconds / 3600 / 1000;
-
-  //console.log(`ms: ${totalMiliseconds}, minutes: ${totalMinutes}, hours: ${totalHours}`);
 
   const onlyHours = Math.floor(totalHours);
   const onlyMinutes = totalMinutes - 60 * onlyHours;

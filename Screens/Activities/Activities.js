@@ -9,8 +9,13 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import IconButton from "../Components/IconButton";
-import { removeActivity, toggleActivityState } from "../Store/reducers/items";
+import IconButton from "../../Components/IconButton/IconButton";
+import {
+  removeActivity,
+  toggleActivityState,
+} from "../../Store/reducers/items";
+
+import styles from "./styles";
 
 const Activities = (props) => {
   const { navigation } = props;
@@ -35,7 +40,6 @@ const Activities = (props) => {
   };
 
   const removeActivityItem = (id) => {
-    //(`Removing ${id}`);
     dispatch(removeActivity(id));
   };
 
@@ -105,36 +109,5 @@ const Activities = (props) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  noActivityPanel: {
-    padding: 20,
-  },
-  noActivityText: {
-    textAlign: "center",
-  },
-  activitiesPanel: {
-    paddingTop: 20,
-  },
-  smallButton: {
-    width: "12.5%",
-    marginTop: 5,
-  },
-  toggleButton: {
-    width: "12.5%",
-  },
-  headerButton: {
-    width: "20%",
-  },
-  activityRow: {
-    flexDirection: "row",
-  },
-  rowText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    width: "62.5%",
-    padding: 10,
-  },
-});
 
 export default Activities;

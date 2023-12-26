@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SummaryPanel } from "../SummaryPanel";
+import { SummaryPanel } from "../SummaryPanel/SummaryPanel";
 
 export const TodayPanel = (props) => {
   const { date } = props;

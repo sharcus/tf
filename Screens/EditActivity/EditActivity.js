@@ -1,9 +1,11 @@
 import React, { useState, useLayoutEffect } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { useDispatch } from "react-redux";
 
-import FeederButton from "../Components/Button";
-import { saveActivity } from "../Store/reducers/items";
+import FeederButton from "../../Components/Button/Button";
+import { saveActivity } from "../../Store/reducers/items";
+
+import styles from "./styles";
 
 const EditActivity = (props) => {
   const { navigation } = props;
@@ -42,26 +44,5 @@ const EditActivity = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    width: "48%",
-  },
-  newInput: {
-    margin: 3,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 6,
-    backgroundColor: "white",
-    textDecorationStyle: "solid",
-    fontSize: 16,
-  },
-  title: {
-    margin: 3,
-    marginTop: 20,
-    fontSize: 20,
-  },
-});
 
 export default EditActivity;
