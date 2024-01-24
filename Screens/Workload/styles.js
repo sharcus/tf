@@ -16,6 +16,13 @@ const styles = StyleSheet.create({
     height: "20%",
     backgroundColor: "white",
   },
+  button: {
+    width: "30%",
+  },
+  buttonContainer: {
+    alignItems: "flex-end",
+    marginRight: 5,
+  },
   activitiesPanel: {
     paddingTop: 20,
   },

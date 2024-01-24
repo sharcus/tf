@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
 
   headerPanel: {
     width: "100%",
+    display: "flex",
     flexDirection: "row",
   },
   buttonPanel: {
@@ -21,10 +22,12 @@ const styles = StyleSheet.create({
     height: 60,
     flexDirection: "row",
     paddingBottom: 26,
+    justifyContent: "flex-end",
+    marginRight: 15,
   },
 
   button: {
-    width: "48%",
+    width: "30%",
   },
 
   dateLabel: {
@@ -32,11 +35,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000000",
     textAlign: "center",
-    width: "87%",
-    marginTop: 5,
+    flex: 5,
   },
   dateButton: {
-    width: "5%",
+    width: 30,
   },
 });
 

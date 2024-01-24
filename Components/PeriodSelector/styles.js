@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   navigationButton: {
-    width: "5%",
+    width: 30,
   },
   navigationLabel: {
     flex: 5,

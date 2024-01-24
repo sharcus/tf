@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   headerPanel: {
-    width: "100%",
+    display: "flex",
     flexDirection: "row",
   },
   buttonPanel: {
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000000",
     textAlign: "center",
-    width: "87%",
+    flex: 5,
   },
   dateButton: {
-    width: "5%",
+    width: 30,
   },
 });
 

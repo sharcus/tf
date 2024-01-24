@@ -1,3 +1,9 @@
+24/01/2024
+----------------------
++ Update appearance of the buttons in application
++ full height for all panel in application
++ skip click on empty cell in plan calendar
+
 26/12/2023
 ----------------------
 + Set Current Date from Summary for New Log screen

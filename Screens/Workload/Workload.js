@@ -169,7 +169,7 @@ const Workload = (props) => {
               onChangeText={updateHours}
             ></TextInput>
           </View>
-          <View>
+          <View style={styles.buttonContainer}>
             <FeederButton
               style={styles.button}
               onPress={onApplyWorkload}

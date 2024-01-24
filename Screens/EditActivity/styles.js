@@ -1,8 +1,23 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  mainPanel: {
+    flex: 1,
+  },
+  topPanel: {
+    marginLeft: 15,
+    marginRight: 15,
+    flex: 9,
+  },
+  bottomPanel: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    marginLeft: 15,
+    marginRight: 15,
+  },
   button: {
-    width: "48%",
+    width: "30%",
   },
   newInput: {
     margin: 3,

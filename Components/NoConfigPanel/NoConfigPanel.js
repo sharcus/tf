@@ -9,18 +9,23 @@ export const NoConfigPanel = (props) => {
   const periodLabel = `${getFullMonthName(props.month)} ${props.year}`;
 
   return (
-    <View>
-      <View style={styles.textContainer}>
-        <Text>There are not plan data defined for </Text>
-        <Text style={styles.periodLabel}>{periodLabel}</Text>
+    <View style={styles.mainPanel}>
+      <View style={styles.topPanel}>
+        <View style={styles.textContainer}>
+          <Text>There are not plan data defined for </Text>
+          <Text style={styles.periodLabel}>{periodLabel}</Text>
+        </View>
+        <View style={styles.textContainer}>
+          <Text>Would you like to create new period?</Text>
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text>Would you like to create new period?</Text>
+      <View style={styles.bottomPanel}>
+        <FeederButton
+          style={styles.button}
+          Text="New Period"
+          onPress={props.onCreateConfig}
+        ></FeederButton>
       </View>
-      <FeederButton
-        Text="Create New Period"
-        onPress={props.onCreateConfig}
-      ></FeederButton>
     </View>
   );
 };

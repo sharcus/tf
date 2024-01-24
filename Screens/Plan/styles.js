@@ -1,6 +1,22 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: "flex-end",
+    marginRight: 5,
+  },
+  fullHeight: {
+    height: "100%",
+  },
+  mainPanel: {
+    flex: 1,
+  },
+  topPanel: {
+    flex: 1,
+  },
+  bottomPanel: {
+    flex: 9,
+  },
   button: {
     width: "30%",
   },
@@ -28,8 +44,8 @@ const styles = StyleSheet.create({
   inputPanel: {
     display: "flex",
     flexDirection: "column",
-    marginBottom: 20,
-    marginTop: 20,
+    marginBottom: 10,
+    marginTop: 10,
   },
 });
 

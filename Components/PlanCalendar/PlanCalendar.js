@@ -23,7 +23,7 @@ const PlanCalendar = (props) => {
     const line = matrixLine.map((x) => (
       <TouchableOpacity
         onPress={() => {
-          props.onToggleDate(x);
+          if (x) props.onToggleDate(x);
         }}
         key={++key}
         style={

@@ -76,15 +76,18 @@ const Plan = (props) => {
   };
 
   return (
-    <KeyboardAvoidingView>
-      <ScrollView>
-        <PeriodSelector
-          month={currentMonth}
-          year={currentYear}
-          onPeriodChanged={onPeriodChanged}
-        ></PeriodSelector>
+    <KeyboardAvoidingView style={styles.fullHeight}>
+      <View style={styles.mainPanel}>
+        <View style={styles.topPanel}>
+          <PeriodSelector
+            month={currentMonth}
+            year={currentYear}
+            onPeriodChanged={onPeriodChanged}
+          ></PeriodSelector>
+        </View>
+
         {config ? (
-          <View>
+          <View style={styles.bottomPanel}>
             <PlanCalendar
               month={currentMonth}
               year={currentYear}
@@ -109,20 +112,24 @@ const Plan = (props) => {
                 </Text>
               </View>
             </View>
-            <FeederButton
-              style={styles.button}
-              onPress={onGoToWorkload}
-              Text="Go To Workload"
-            />
+            <View style={styles.buttonContainer}>
+              <FeederButton
+                style={styles.button}
+                onPress={onGoToWorkload}
+                Text="Go To Workload"
+              />
+            </View>
           </View>
         ) : (
-          <NoConfigPanel
-            month={currentMonth}
-            year={currentYear}
-            onCreateConfig={onCreateConfig}
-          ></NoConfigPanel>
+          <View style={styles.bottomPanel}>
+            <NoConfigPanel
+              month={currentMonth}
+              year={currentYear}
+              onCreateConfig={onCreateConfig}
+            ></NoConfigPanel>
+          </View>
         )}
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };

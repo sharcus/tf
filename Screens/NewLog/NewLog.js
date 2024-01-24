@@ -237,16 +237,16 @@ const NewLog = (props) => {
               multiline={true}
             ></TextInput>
           </View>
-          <View style={styles.row}>
+          <View style={styles.buttonContainer}>
             <FeederButton
-              style={styles.buttomButton}
-              Text="Accept"
-              onPress={onAccept}
-            ></FeederButton>
-            <FeederButton
-              style={styles.buttomButton}
+              style={styles.button}
               Text="Cancel"
               onPress={onCancel}
+            ></FeederButton>
+            <FeederButton
+              style={styles.button}
+              Text="Accept"
+              onPress={onAccept}
             ></FeederButton>
           </View>
         </View>

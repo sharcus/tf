@@ -58,9 +58,18 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     backgroundColor: "white",
   },
-  buttomButton: {
+  buttonContainer: {
+    display: "flex",
+    width: "100%",
+    height: 60,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
+    marginRight: 15,
+  },
+  button: {
     marginTop: 20,
-    width: "46%",
+    width: "30%",
   },
 });
 

@@ -21,26 +21,30 @@ const EditActivity = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <View>
-      <Text style={styles.title}>Specify Activity Name</Text>
-      <TextInput
-        style={styles.newInput}
-        value={nameValue}
-        onChangeText={(text) => setNameValue(text)}
-      ></TextInput>
-      <FeederButton
-        style={styles.button}
-        onPress={() => {
-          const payload = {
-            id: id,
-            name: nameValue,
-          };
+    <View style={styles.mainPanel}>
+      <View style={styles.topPanel}>
+        <Text style={styles.title}>Specify Activity Name</Text>
+        <TextInput
+          style={styles.newInput}
+          value={nameValue}
+          onChangeText={(text) => setNameValue(text)}
+        ></TextInput>
+      </View>
+      <View style={styles.bottomPanel}>
+        <FeederButton
+          style={styles.button}
+          onPress={() => {
+            const payload = {
+              id: id,
+              name: nameValue,
+            };
 
-          dispatch(saveActivity(payload));
-          props.navigation.goBack();
-        }}
-        Text="Apply"
-      />
+            dispatch(saveActivity(payload));
+            props.navigation.goBack();
+          }}
+          Text="Apply"
+        />
+      </View>
     </View>
   );
 };
