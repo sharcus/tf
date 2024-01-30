@@ -115,7 +115,7 @@ const MoreView = (props) => {
             onPress={() => {
               onEditLog(log);
             }}
-            icon="ios-brush"
+            icon="brush"
           />
         </View>
         <View style={styles.buttonCell}>
@@ -123,7 +123,7 @@ const MoreView = (props) => {
             onPress={() => {
               onRemoveLog(log);
             }}
-            icon="ios-close-circle"
+            icon="close-circle"
           />
         </View>
       </View>

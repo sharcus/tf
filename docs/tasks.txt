@@ -1,3 +1,8 @@
+30/01/2024
+----------------------
++ Add Permanent Storage support
++ Migrate to Expo 50
+
 24/01/2024
 ----------------------
 + Update appearance of the buttons in application

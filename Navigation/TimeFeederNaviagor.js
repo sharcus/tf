@@ -66,13 +66,13 @@ const TimeFeederNavigator = () => {
           let iconName;
 
           if (route.name === "Home") {
-            iconName = "ios-home-sharp";
+            iconName = "home-sharp";
           } else if (route.name === "Plan") {
-            iconName = "ios-barcode-sharp";
+            iconName = "barcode-sharp";
           } else if (route.name === "Activity") {
-            iconName = "ios-body";
+            iconName = "body";
           } else if (route.name === "Statistics") {
-            iconName = "ios-analytics";
+            iconName = "analytics-sharp";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;

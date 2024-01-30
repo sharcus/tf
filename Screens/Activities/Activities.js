@@ -27,7 +27,7 @@ const Activities = (props) => {
         <IconButton
           style={styles.headerButton}
           onPress={onNewItem}
-          icon="ios-add-circle-outline"
+          icon="add-circle-outline"
         />
       ),
     });
@@ -72,7 +72,7 @@ const Activities = (props) => {
         onPress={() => {
           props.navigation.navigate("EditActivity", { id: x.id, name: x.name });
         }}
-        icon="ios-brush"
+        icon="brush"
       />
       <Switch
         style={styles.toggleButton}
@@ -89,7 +89,7 @@ const Activities = (props) => {
         onPress={() => {
           onRemoveItem(x.id, x.name);
         }}
-        icon="ios-close-circle"
+        icon="close-circle"
       />
     </View>
   ));
