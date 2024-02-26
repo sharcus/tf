@@ -1,3 +1,8 @@
+26/02/2024
+----------------------
++ Fix issue with removing log item
++ Fix issue that Statistics charts was not updated properly on Activity items changes
+
 30/01/2024
 ----------------------
 + Add Permanent Storage support

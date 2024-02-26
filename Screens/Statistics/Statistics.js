@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import Checkbox from "expo-checkbox";
 import { useSelector } from "react-redux";
@@ -27,6 +27,11 @@ const Statistics = (props) => {
   let allActivities = JSON.parse(JSON.stringify(activityItems));
 
   const [activities, setActivities] = useState(allActivities);
+
+  useEffect(() => {
+    let allActivities = JSON.parse(JSON.stringify(activityItems));
+    setActivities(allActivities);
+  }, [activityItems]);
 
   const logItems = useSelector((state) =>
     state.logs.logItems.map((x) => unstringifyLogItemDates(x))

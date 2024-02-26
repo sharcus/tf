@@ -37,7 +37,7 @@ const logsSlice = createSlice({
       const logItems = state.logItems;
       const logId = action.payload;
 
-      logItems = logItems.filter((x) => x.id != logId);
+      state.logItems = logItems.filter((x) => x.id != logId);
     },
   },
 });
