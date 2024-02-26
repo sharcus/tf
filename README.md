@@ -21,6 +21,7 @@ The project is created commonly in educational purposes as a pet project. Main g
   <li>Redux 4.2.0</li>
   <li>Reduxjs/toolkit 1.9.7</li>
   <li>Async Storage 1.21.0</li>
+  <li>React Native Chart Kit 6.12.0</li>
 </ul>
 
 
@@ -99,4 +100,6 @@ Now your activities and monthly plan is scheduled, so you can track activities o
 
 <h3 id="step-3">Step 4. Analyze your activity</h3>
 Time Feeder allow you analyze you activity. <b>Staticstics</b> screen contains a chart which show you activity progress for the selected month
+<img src="https://github.com/sharcus/tf/assets/382375/673b9e0a-d00b-40fd-8d5f-e07c0eff4c76" />
+
 
